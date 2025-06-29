@@ -16,9 +16,15 @@ theme:
       icon: material/weather-night
       name: Mudar para tema escuro
 nav:
-- Página Inicial: index.md
-- Others:
-  - Ideias: others/ideas.md
+- Início: index.md
+- Sobre Outros:
+  - Sobre Outros: others/index.md
   - Cronograma: others/schedule.md
-- Rfcs:
-  - Definição RFC: rfcs/0001_definicao_rfc.md
+- Sobre Relatórios:
+  - Sobre Relatórios: reports/index.md
+  - Status:
+    - Relatório de Status - 29/06/2025: reports/status/report_2025_06_29.md
+- Sobre RFCs:
+  - Sobre RFCs: rfcs/index.md
+  - Files:
+    - 0001_experiments: rfcs/files/0001_experiments.md
