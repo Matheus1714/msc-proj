@@ -1,0 +1,11 @@
+services:
+  mkdocs:
+    build:
+      context: docker
+      dockerfile: mkdocs.Dockerfile
+
+    container_name: mkdocs
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
