@@ -1,5 +1,6 @@
 import yaml
 from pathlib import Path
+from collections import defaultdict
 
 DOCS_DIR = Path("docs")
 MKDOCS_YML = Path("mkdocs.yaml")
@@ -20,8 +21,44 @@ def extract_title_from_md(md_path: Path) -> str | None:
     return None
 
 def fallback_title(md_path: Path) -> str:
-    """Cria um título legível a partir do nome do arquivo"""
-    return md_path.stem.replace("-", " ").replace("_", " ").capitalize()
+    return md_path.stem
+
+# def build_nav_from_docs(base_dir: Path):
+#     nav = []
+
+#     index_md = base_dir / "index.md"
+#     if index_md.exists():
+#         title = extract_title_from_md(index_md) or "Início"
+#         nav.append({title: "index.md"})
+
+#     sections = defaultdict(dict)
+
+#     for md_path in sorted(base_dir.rglob("*.md")):
+#         rel_path = md_path.relative_to(base_dir)
+#         if rel_path == Path("index.md"):
+#             continue
+
+#         parts = rel_path.parts
+#         title = extract_title_from_md(md_path) or fallback_title(md_path)
+
+#         current = sections
+#         for part in parts[:-1]:  # subpastas
+#             current = current.setdefault(part.capitalize(), {})
+
+#         current[title] = str(rel_path)
+
+#     def dict_to_nav(d):
+#         items = []
+#         for key, value in d.items():
+#             if isinstance(value, dict):
+#                 items.append({key: dict_to_nav(value)})
+#             else:
+#                 items.append({key: value})
+#         return items
+
+#     nav.extend(dict_to_nav(sections))
+#     return nav
+
 
 def build_nav_from_docs(base_dir: Path):
     nav = []
@@ -31,16 +68,48 @@ def build_nav_from_docs(base_dir: Path):
         title = extract_title_from_md(index_md) or "Início"
         nav.append({title: "index.md"})
 
-    for item in sorted(base_dir.iterdir()):
-        if item.is_dir():
-            children = sorted(item.glob("*.md"))
-            if children:
-                section = []
-                for child in children:
-                    title = extract_title_from_md(child) or fallback_title(child)
-                    section.append({title: str(child.relative_to(base_dir))})
-                nav.append({item.name.capitalize(): section})
+    sections = {}
 
+    # Coleta todos os arquivos Markdown
+    for md_path in sorted(base_dir.rglob("*.md")):
+        rel_path = md_path.relative_to(base_dir)
+        if rel_path == Path("index.md"):
+            continue
+
+        parts = rel_path.parts
+        *folders, filename = parts
+
+        current = sections
+        for folder in folders:
+            current = current.setdefault(folder, {})
+
+        # Detecta se é index.md
+        if filename == "index.md":
+            current["__section_title__"] = extract_title_from_md(md_path) or fallback_title(md_path.parent)
+            current["__index__"] = str(rel_path)
+        else:
+            title = extract_title_from_md(md_path) or fallback_title(md_path)
+            current[title] = str(rel_path)
+
+    def dict_to_nav(d):
+        items = []
+        for key, value in d.items():
+            if key in ["__section_title__", "__index__"]:
+                continue
+            if isinstance(value, dict):
+                section_title = value.get("__section_title__", key.capitalize())
+                children = dict_to_nav(value)
+                index_path = value.get("__index__")
+                if index_path:
+                    children.insert(0, {section_title: index_path})
+                    items.append({section_title: children})
+                else:
+                    items.append({section_title: children})
+            else:
+                items.append({key: value})
+        return items
+
+    nav.extend(dict_to_nav(sections))
     return nav
 
 def update_mkdocs_yaml(nav_data):
