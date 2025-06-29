@@ -1,5 +1,4 @@
 import yaml
-from json import dumps
 from pathlib import Path
 
 DOCS_DIR = Path("docs")
