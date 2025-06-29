@@ -1,0 +1,24 @@
+site_name: Docs Projeto de Mestrado
+site_url: https://matheus1714.github.io/msc-proj/
+theme:
+  name: material
+  palette:
+  - scheme: slate
+    primary: indigo
+    accent: amber
+    toggle:
+      icon: material/weather-sunny
+      name: Mudar para tema claro
+  - scheme: default
+    primary: indigo
+    accent: indigo
+    toggle:
+      icon: material/weather-night
+      name: Mudar para tema escuro
+nav:
+- Página Inicial: index.md
+- Others:
+  - Ideias: others/ideas.md
+  - Cronograma: others/schedule.md
+- Rfcs:
+  - Definição RFC: rfcs/0001_definicao_rfc.md

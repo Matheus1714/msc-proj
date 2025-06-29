@@ -1,0 +1,6 @@
+---
+title: Ideias
+---
+
+# Ideias
+
