@@ -30,6 +30,12 @@ O andamento do projeto pode ser acompanhado pelo [cronograma](/msc-proj/others/s
 - [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/)
 - Python, Jupyter Notebooks, ferramentas de NLP, etc.
 
+## Links Rápidos
+
+- [Documento Overleaf](https://www.overleaf.com/project/6482050c1c6ea5c00b3344b4)
+- [Google Drive Arquivos](https://drive.google.com/drive/folders/12XmtEgzXKUfD6ylQFEi4PRTmDYkzd6h7?usp=sharing)
+- [Google Sites Mestrado](https://sites.google.com/view/msc-matheus-mota/doc-geral-artefatos/01-vis%C3%A3o-do-projeto)
+
 ---
 
 *Este site é atualizado continuamente conforme o progresso do projeto.*
