@@ -1,0 +1,7 @@
+site_name: RFCs do Projeto de Mestrado
+theme:
+  name: material
+docs_dir: rfcs
+nav:
+  - Início: 0001-primeira-rfc.md
+  - Segunda RFC: 0002-segunda-rfc.md
