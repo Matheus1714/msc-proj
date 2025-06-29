@@ -23,43 +23,6 @@ def extract_title_from_md(md_path: Path) -> str | None:
 def fallback_title(md_path: Path) -> str:
     return md_path.stem
 
-# def build_nav_from_docs(base_dir: Path):
-#     nav = []
-
-#     index_md = base_dir / "index.md"
-#     if index_md.exists():
-#         title = extract_title_from_md(index_md) or "Início"
-#         nav.append({title: "index.md"})
-
-#     sections = defaultdict(dict)
-
-#     for md_path in sorted(base_dir.rglob("*.md")):
-#         rel_path = md_path.relative_to(base_dir)
-#         if rel_path == Path("index.md"):
-#             continue
-
-#         parts = rel_path.parts
-#         title = extract_title_from_md(md_path) or fallback_title(md_path)
-
-#         current = sections
-#         for part in parts[:-1]:  # subpastas
-#             current = current.setdefault(part.capitalize(), {})
-
-#         current[title] = str(rel_path)
-
-#     def dict_to_nav(d):
-#         items = []
-#         for key, value in d.items():
-#             if isinstance(value, dict):
-#                 items.append({key: dict_to_nav(value)})
-#             else:
-#                 items.append({key: value})
-#         return items
-
-#     nav.extend(dict_to_nav(sections))
-#     return nav
-
-
 def build_nav_from_docs(base_dir: Path):
     nav = []
 
