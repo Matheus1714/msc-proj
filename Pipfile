@@ -16,6 +16,8 @@ openpyxl = "*"
 
 [dev-packages]
 ipykernel = "*"
+mkdocs = "*"
+mkdocs-material = "*"
 
 [requires]
 python_version = "3.10"
