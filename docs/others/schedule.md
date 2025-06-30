@@ -1,14 +1,15 @@
 ---
 title: Cronograma
+summary: Visão geral das etapas do mestrado com prazos de redação, pesquisa e apresentação final.
 ---
 
 # Cronograma
 
+![Cronograma do Mestrado](../assets/cronograma.png)
+
 Este é o cronograma planejado para as principais atividades do mestrado, incluindo redação dos capítulos, etapas de pesquisa e preparação da apresentação final.
 
 A imagem abaixo apresenta uma visão geral mês a mês, do andamento esperado de cada tarefa:
-
-![Cronograma do Mestrado](../assets/cronograma.png)
 
 ## 🧾 Descrição das Etapas
 

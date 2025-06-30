@@ -1,12 +1,15 @@
 ---
 title: RFCs
+summary: Introdução ao conceito de RFCs e seu uso para documentar decisões técnicas no projeto de mestrado.
 ---
 
 # Definição RFC
 
+![Definição RFC](./assets/default.png)
+
 Um **RFC** (*Request for Comments*, ou "Pedido de Comentários") é um documento técnico que descreve especificações, propostas ou padrões relacionados a sistemas computacionais, projetos de software, ou processos organizacionais. É amplamente utilizado em comunidades de software livre, grupos de pesquisa, empresas de tecnologia e desenvolvimento colaborativo para registrar e discutir decisões de projeto antes de implementá-las.
 
-## 📚 Para que serve um RFC?
+## Para que serve um RFC?
 
 O principal objetivo de um RFC é:
 
@@ -17,7 +20,7 @@ O principal objetivo de um RFC é:
 
 RFCs ajudam a evitar decisões arbitrárias ou mal documentadas, criando um registro claro das intenções, implicações e alternativas consideradas.
 
-## 🧱 Estrutura comum de um RFC
+## Estrutura comum de um RFC
 
 Embora a estrutura possa variar conforme o projeto ou organização, uma RFC geralmente segue o seguinte modelo:
 
@@ -32,7 +35,7 @@ Embora a estrutura possa variar conforme o projeto ou organização, uma RFC ger
 9. **Referências**: Fontes e materiais relacionados.
 10. **Histórico de revisão** (*Changelog*): Atualizações e edições feitas no documento.
 
-## 🧑‍🔬 Exemplo de uso no mestrado
+## Exemplo de uso no mestrado
 
 No contexto de um projeto de mestrado, RFCs podem ser usados para:
 
@@ -40,14 +43,14 @@ No contexto de um projeto de mestrado, RFCs podem ser usados para:
 - Especificar mudanças na organização dos dados ou na arquitetura experimental.
 - Discutir novos fluxos de trabalho ou ferramentas adotadas.
 
-## 📌 Benefícios
+## Benefícios
 
 - Melhor colaboração entre orientador, colegas e revisores.
 - Transparência nas decisões.
 - Facilidade para retomar discussões técnicas após pausas longas.
 - Registro formal e rastreável das decisões do projeto.
 
-## 🔗 Referências
+## Referências
 
 - [IETF RFC Editor](https://www.rfc-editor.org/) — Base oficial de RFCs da Internet (ex: TCP/IP, HTTP, etc.)
 - [GitHub RFC Process – Rust Language](https://github.com/rust-lang/rfcs) — Exemplo real de uso de RFCs em projeto open-source.

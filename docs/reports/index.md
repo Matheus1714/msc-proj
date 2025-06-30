@@ -1,12 +1,15 @@
 ---
 title: Relatórios
+summary: Seção destinada ao registro contínuo das atividades, experimentos e avanços no projeto de mestrado.
 ---
 
 # Relatórios
 
+![Status Report Figura](assets/default.jpeg)
+
 Esta seção é dedicada aos relatórios gerados ao longo do desenvolvimento do projeto de mestrado. Os relatórios têm como objetivo registrar o progresso das atividades, experimentos realizados, análises de resultados e qualquer outro tipo de informação relevante para o acompanhamento do trabalho.
 
-## 📋 Objetivo dos Relatórios
+## Objetivo dos Relatórios
 
 Os relatórios servem como uma forma de:
 
@@ -16,7 +19,7 @@ Os relatórios servem como uma forma de:
 - Compartilhar status com o orientador ou com o grupo de pesquisa.
 - Facilitar o acompanhamento contínuo e a organização do projeto.
 
-## 🗓️ Frequência
+## Frequência
 
 A criação dos relatórios é flexível. Eles podem ser:
 
@@ -27,7 +30,7 @@ A criação dos relatórios é flexível. Eles podem ser:
   - Discussão com o orientador,
   - Análise estatística concluída.
 
-## 🧪 Conteúdo típico de um relatório
+## Conteúdo típico de um relatório
 
 Cada relatório pode conter:
 
@@ -41,5 +44,7 @@ Cada relatório pode conter:
 
 ---
 
-> ⚠️ Os relatórios não precisam seguir um modelo rígido, mas devem ser objetivos e úteis para consulta futura.
+!!! info
+
+    Os relatórios não precisam seguir um modelo rígido, mas devem ser objetivos e úteis para consulta futura.
 
