@@ -31,4 +31,7 @@ nav:
 - RFCs:
   - RFCs: rfcs/index.md
   - Files:
-    - 0001_experiments: rfcs/files/0001_experiments.md
+    - RFC 0001 - Expansão dos Experimentos: rfcs/files/0001_experiments.md
+    - 0002_hyperparams_sensibility: rfcs/files/0002_hyperparams_sensibility.md
+- Study:
+  - Técnicas de Classificação de Textos: study/0001_text_classification_techniques.md
