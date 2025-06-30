@@ -1,5 +1,5 @@
 ---
-title: Sobre Relatórios
+title: Relatórios
 ---
 
 # Relatórios

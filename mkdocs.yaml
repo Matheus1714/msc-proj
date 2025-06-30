@@ -21,14 +21,14 @@ markdown_extensions:
 - pymdownx.superfences
 nav:
 - Início: index.md
-- Sobre Outros:
-  - Sobre Outros: others/index.md
+- Outros:
+  - Outros: others/index.md
   - Cronograma: others/schedule.md
-- Sobre Relatórios:
-  - Sobre Relatórios: reports/index.md
+- Relatórios:
+  - Relatórios: reports/index.md
   - Status:
     - Relatório de Status - 29/06/2025: reports/status/status_report_2025_06_29.md
-- Sobre RFCs:
-  - Sobre RFCs: rfcs/index.md
+- RFCs:
+  - RFCs: rfcs/index.md
   - Files:
     - 0001_experiments: rfcs/files/0001_experiments.md

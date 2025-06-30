@@ -1,5 +1,5 @@
 ---
-title: Sobre RFCs
+title: RFCs
 ---
 
 # Definição RFC

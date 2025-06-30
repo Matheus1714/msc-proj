@@ -1,5 +1,5 @@
 ---
-title: Sobre Outros
+title: Outros
 ---
 
 # Outros
