@@ -1,8 +1,8 @@
 ---
-title: Relatório de Status - 29/06/2025
+title: Status Report - 29/06/2025
 ---
 
-# Relatório de Status - 29/06/2025
+# _Status Report_ - 29/06/2025
 
 ## Intrudução
 

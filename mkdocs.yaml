@@ -27,7 +27,7 @@ nav:
 - Relatórios:
   - Relatórios: reports/index.md
   - Status:
-    - Relatório de Status - 29/06/2025: reports/status/status_report_2025_06_29.md
+    - Status Report - 29/06/2025: reports/status/status_report_2025_06_29.md
 - RFCs:
   - RFCs: rfcs/index.md
   - Files:
