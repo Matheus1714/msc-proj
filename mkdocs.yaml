@@ -15,6 +15,10 @@ theme:
     toggle:
       icon: material/weather-night
       name: Mudar para tema escuro
+markdown_extensions:
+- admonition
+- pymdownx.details
+- pymdownx.superfences
 nav:
 - Início: index.md
 - Sobre Outros:
@@ -23,7 +27,7 @@ nav:
 - Sobre Relatórios:
   - Sobre Relatórios: reports/index.md
   - Status:
-    - Relatório de Status - 29/06/2025: reports/status/report_2025_06_29.md
+    - Relatório de Status - 29/06/2025: reports/status/status_report_2025_06_29.md
 - Sobre RFCs:
   - Sobre RFCs: rfcs/index.md
   - Files:
