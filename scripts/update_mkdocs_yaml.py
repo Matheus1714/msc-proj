@@ -102,6 +102,11 @@ def update_mkdocs_yaml(nav_data):
                 }
             ],
         },
+        "markdown_extensions": [
+            "admonition",
+            "pymdownx.details",
+            "pymdownx.superfences",
+        ],
         "nav": nav_data
     }
 
