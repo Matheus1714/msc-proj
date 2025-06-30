@@ -1,0 +1,1388 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://matheus1714.github.io/msc-proj/reports/status/status_report_2025_06_29/">
+      
+      
+        <link rel="prev" href="../../">
+      
+      
+        <link rel="next" href="../../../rfcs/">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>Relatório de Status - 29/06/2025 - Docs Projeto de Mestrado</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#relatorio-de-status-29062025" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Docs Projeto de Mestrado" class="md-header__button md-logo" aria-label="Docs Projeto de Mestrado" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Docs Projeto de Mestrado
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Relatório de Status - 29/06/2025
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Mudar para tema claro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Mudar para tema claro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Mudar para tema escuro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Mudar para tema escuro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Docs Projeto de Mestrado" class="md-nav__button md-logo" aria-label="Docs Projeto de Mestrado" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Docs Projeto de Mestrado
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Início
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Sobre Outros
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Sobre Outros
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../others/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Sobre Outros
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../others/schedule/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Cronograma
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Sobre Relatórios
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Sobre Relatórios
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Sobre Relatórios
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Status
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            Status
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Relatório de Status - 29/06/2025
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Relatório de Status - 29/06/2025
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#intruducao" class="md-nav__link">
+    <span class="md-ellipsis">
+      Intrudução
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#descricao-das-atividades-realizadas" class="md-nav__link">
+    <span class="md-ellipsis">
+      Descrição das Atividades Realizadas
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#experimentosestudos-realizados" class="md-nav__link">
+    <span class="md-ellipsis">
+      Experimentos/Estudos Realizados
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Experimentos/Estudos Realizados">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fundamentacao-e-objetivos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fundamentação e Objetivos
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metodologia-implementada" class="md-nav__link">
+    <span class="md-ellipsis">
+      Metodologia Implementada
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metricas-de-avaliacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      Métricas de Avaliação
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resultados-experimentais-parciais" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resultados Experimentais Parciais
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#estudo-detalhado-do-artigo-evaluation-of-attention-based-lstm-and-bi-lstm-networks-for-abstract-text-classification-in-systematic-literature-review-automation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Estudo Detalhado do "Artigo Evaluation of attention-based LSTM and Bi-LSTM networks for abstract text classification in systematic literature review automation"
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resultados-obtidos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resultados Obtidos
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#problemas-encontrados" class="md-nav__link">
+    <span class="md-ellipsis">
+      Problemas Encontrados
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#proximos-passos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Próximos Passos
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Sobre RFCs
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Sobre RFCs
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../rfcs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Sobre RFCs
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Files
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            Files
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../rfcs/files/0001_experiments/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    0001_experiments
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#intruducao" class="md-nav__link">
+    <span class="md-ellipsis">
+      Intrudução
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#descricao-das-atividades-realizadas" class="md-nav__link">
+    <span class="md-ellipsis">
+      Descrição das Atividades Realizadas
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#experimentosestudos-realizados" class="md-nav__link">
+    <span class="md-ellipsis">
+      Experimentos/Estudos Realizados
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Experimentos/Estudos Realizados">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fundamentacao-e-objetivos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fundamentação e Objetivos
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metodologia-implementada" class="md-nav__link">
+    <span class="md-ellipsis">
+      Metodologia Implementada
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metricas-de-avaliacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      Métricas de Avaliação
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resultados-experimentais-parciais" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resultados Experimentais Parciais
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#estudo-detalhado-do-artigo-evaluation-of-attention-based-lstm-and-bi-lstm-networks-for-abstract-text-classification-in-systematic-literature-review-automation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Estudo Detalhado do "Artigo Evaluation of attention-based LSTM and Bi-LSTM networks for abstract text classification in systematic literature review automation"
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resultados-obtidos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resultados Obtidos
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#problemas-encontrados" class="md-nav__link">
+    <span class="md-ellipsis">
+      Problemas Encontrados
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#proximos-passos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Próximos Passos
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="relatorio-de-status-29062025">Relatório de Status - 29/06/2025</h1>
+<h2 id="intruducao">Intrudução</h2>
+<p>Este relatório de status tem como objetivo documentar o progresso realizado no projeto de mestrado ao longo do mês de Junho de 2025, com foco especial no período entre os dias 04/06 e 29/06. As atividades desenvolvidas neste intervalo concentram-se no estudo aprofundado, replicação parcial e análise crítica do artigo "Evaluation of attention-based LSTM and Bi-LSTM networks for abstract text classification in systematic literature review automation".</p>
+<p>O trabalho se insere no contexto de automação de Revisões Sistemáticas da Literatura (RSL), mais especificamente na etapa de triagem de resumos (abstract screening), que representa um dos principais gargalos em termos de esforço humano. Foram realizadas atividades que incluem a análise teórica do artigo, a construção de um pipeline experimental baseado no modelo proposto pelos autores, a coleta e preparação das bases de dados públicas disponíveis, bem como a avaliação quantitativa dos resultados obtidos em comparação com os relatados originalmente.</p>
+<p>Além disso, parte das descobertas serão incorporadas aos capítulos da dissertação em andamento, com destaque para a fundamentação teórica (Capítulo 2), descrição da metodologia (Capítulo 4), estudos de caso (Capítulo 5) e estruturação inicial da análise de resultados (Capítulo 6). O relatório também descreve os principais obstáculos enfrentados na reprodutibilidade dos experimentos e apresenta os próximos passos para aprofundar a calibração de modelos e a ampliação dos testes.</p>
+<h2 id="descricao-das-atividades-realizadas">Descrição das Atividades Realizadas</h2>
+<p>As atividades realizadas foram:</p>
+<ol>
+<li>Estudo detalhado do artigo "Artigo Evaluation of attention-based LSTM and Bi-LSTM networks for abstract text classification in systematic literature review automation"<ul>
+<li>Identificar o problema que o artigo resolve</li>
+<li>Identificar o método utilizado</li>
+<li>Identificar as métricas utilizadas</li>
+</ul>
+</li>
+<li>Fazer uma primeira análise experimental dos resultados<ul>
+<li>Busca das bases de dados necessárias</li>
+<li>Busca se há necessidade de pré-processamento</li>
+<li>Tentar replicar o máximo possível os resultados</li>
+</ul>
+</li>
+<li>Adicionar informações na tese de mestrado<ul>
+<li>Capítulo 2 (Fundamentação Teórica)</li>
+<li>Capítulo 4 (Método Proposto)</li>
+<li>Capítulo 5 (Estudos de Caso)</li>
+<li>Capítulo 6 (Análise e Discussão de Resultados)</li>
+</ul>
+</li>
+</ol>
+<div class="admonition warning">
+<p class="admonition-title">Observação Capítulo 6</p>
+<p>O caso do Capítulo 6 seria apenas montar o esqueleto dos resultados</p>
+</div>
+<h2 id="experimentosestudos-realizados">Experimentos/Estudos Realizados</h2>
+<h3 id="fundamentacao-e-objetivos">Fundamentação e Objetivos</h3>
+<p>O artigo analisado propõe automatizar a etapa de triagem de resumos (abstract screening) no processo de Revisão Sistemática (Systematic Review - SR), que é considerada a mais onerosa. Para isso, foram explorados modelos de Deep Learning como <code>LSTM</code> e <code>Bi-LSTM</code> com embeddings <code>GloVe</code> e mecanismos de atenção.</p>
+<p>Dois principais objetivos norteiam o trabalho:
+1. Avaliar a viabilidade de usar modelos <code>LSTM</code> e <code>Bi-LSTM</code>, comparando-os com métodos tradicionais como <code>SVM + TF-IDF</code>;
+2. Investigar se o uso de mecanismos de atenção melhora a precisão sem comprometer o recall, buscando manter este último em &gt;= 95%.</p>
+<h3 id="metodologia-implementada">Metodologia Implementada</h3>
+<ul>
+<li><strong>Bases de dados</strong>: Foram utilizadas seis bases de dados de revisões sistemáticas (5 públicas e 1 privada). Apenas as públicas foram usadas no experimento.</li>
+<li><strong>Pré-processamento</strong>: Tokenização, remoção de pontuação e stopwords. <em>Lemmatização/stemming</em> foram evitados para não perder informação semântica importante.</li>
+<li><strong>Vetorização</strong>: Utilizou-se GloVe com 300 dimensões, considerando o tamanho médio dos resumos.</li>
+<li><strong>Modelos testados</strong>:<ul>
+<li>LSTM + GloVe</li>
+<li>Bi-LSTM + GloVe</li>
+<li>LSTM + GloVe + Attention</li>
+<li>Bi-LSTM + GloVe + Attention</li>
+</ul>
+</li>
+<li><strong>Técnica de balanceamento</strong>: Aprendizado sensível a custo (cost-sensitive learning) usando pesos proporcionais ao desbalanceamento entre classes.</li>
+<li><strong>Avaliação</strong>: 5-fold cross-validation com métricas: Precision, Recall, F2-score e WSS@95.</li>
+</ul>
+<h3 id="metricas-de-avaliacao">Métricas de Avaliação</h3>
+<ul>
+<li><strong>Precision</strong>: TP / (TP + FP)</li>
+<li><strong>Recall</strong>: TP / (TP + FN)</li>
+<li><strong>F2-Score</strong>: (5 * P * R) / (4 * (P + R))</li>
+<li><strong>WSS@95</strong>: Quantifica o esforço economizado ao atingir 95% de recall — métrica crítica em SRs.</li>
+</ul>
+<h3 id="resultados-experimentais-parciais">Resultados Experimentais Parciais</h3>
+<p>Foi possível executar a replicação parcial dos experimentos com os modelos propostos. Os primeiros testes foram feitos com a base Appenzeller-Herzog 2020, utilizando a arquitetura <code>Bi-LSTM</code> com e sem atenção. O pipeline envolveu:</p>
+<ul>
+<li>Treinamento com batch size 64, 10 epochs;</li>
+<li>Otimização com Adam (lr = 3e-4 para LSTM, 1e-4 para Bi-LSTM);</li>
+<li>Dropout aplicados para evitar overfitting;</li>
+<li>Predição com limiar calibrado para recall &gt;= 95%.</li>
+</ul>
+<p>Resultados numéricos e gráficos de precisão vs. recall foram extraídos do notebook e servirão como base para os capítulos da dissertação.</p>
+<h3 id="estudo-detalhado-do-artigo-evaluation-of-attention-based-lstm-and-bi-lstm-networks-for-abstract-text-classification-in-systematic-literature-review-automation">Estudo Detalhado do "Artigo Evaluation of attention-based LSTM and Bi-LSTM networks for abstract text classification in systematic literature review automation"</h3>
+<p>O primeiro passo realizado foi um estudo aprofundado no artigo <a href="https://pdf.sciencedirectassets.com/280203/1-s2.0-S1877050923X00064/1-s2.0-S1877050923009146/main.pdf?X-Amz-Security-Token=IQoJb3JpZ2luX2VjELf%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLWVhc3QtMSJIMEYCIQDUnpWipX7RTPfEA61SdXL0X573DkWql%2FzXxFo%2BIrp%2FQgIhAIKSeRHDVugFbX0OFG%2F42xRI%2BbDMjSYXGxlthWgTN2vFKrwFCLD%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEQBRoMMDU5MDAzNTQ2ODY1IgxBbdPQVFx%2BbPPi4bwqkAWLZMJoGCT5GQS8hn3z5D6MpT7o%2B4%2F0oSH2IXBC0kgv5%2B4XG3PLm3C6H4I2wj1mzJ%2BUqwuLOzAunOCbpEmcIlikmRw4JUVMOVnnEW6FuYKT37Tvj1Gd3mFMD7ima%2F0XNKYjgrW5z51ytSS5Gupo39KQsQKG16vCr%2Fx5KJ2q3jHv3UYLcGk8faZ8mMH90uQwYsL2XKxqwhSr83puIraIJhwAzWbrfebxtLv86Amufe1AZlRe2v743YTWT65bmYrutnQt0hyigatvhiqI7cQNiu2nj2q4ZSK0CpkGQgn21l%2FQ2HN3NaO4fp%2BdBmF47pZkTX%2F8ZoL5l4Emf%2BSlYdPh3HY8TiEQ2383zjo6v6TnXnf%2B4B6TFENcVH13uqZ0ZAg2gbpTMnjfwUPF%2FpJ9wsyYCc0OO8T6b0YGTSxI8c%2FO%2FPWn7fZN2jG4dPc4eUBNE08q7lOMkLnwl3qNXrxY7LIXihgaFeMkAqm%2BUmLcTxLoa6xup7nLyYflSFElnr7Hi94TMRGLC92a2lMCe%2F3kl56%2F6cEB%2BnWT6O2Ea7cIoWyfr9bAFeUfR3d2WoyD1ukCHafbU5IuvRc8QdJ7ZA1sSb7EbnVjA9pRCmkl9jjjFMc5Wuwt9T5Df0FJG0rBSpMTprkW%2BeopteGGCrnwsEHXBQTv2Y%2FF9RmXShJFQz4qS8wRp28NzHOvQR4V%2B0%2BuECR%2F9g7%2Bk0BJ1hfsStJF3zikqQZT9z3jnX7CdO1RvTxvVEGp7TTGlR2Kb0GhOKwBuSYzKm9P9WBNI3HRGEBYRAxvGnzjqtWTJb5WUi%2FI9zYw%2Fx5dV1tObwX5ZF5us8J5PPGuXhs8nTPBWfGWQvHlRE9kCe%2BEk8tvCy%2BFyVOiz7C0xkinwEq42TC%2Fi4fDBjqwARrX%2F82B41CEKvFx9nwngKoQgGkf6FqOQdSx78QdgB110OdxtBZVrlQ5Hhgb7VOrg3iKSNljOYSEWMhOarEF4TmpJqcLa44gs2NjVU7cCfRspnUM%2F5QDKnL1CQq66aqKY0rFuSJ2xAeeKNrv5Nv1NRD5cBfzHc4MGbB8A4FUSD9CUyFthFxPN%2B3s04EHVamB9EDLAgs%2BXng9BDnkuYIRy7O8rt9PUbsWoIy6wMD1NuaG&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Date=20250630T000340Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=300&amp;X-Amz-Credential=ASIAQ3PHCVTY43YGBZMY%2F20250630%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Signature=32784ac544b87b8c5622ffa270e2bf135d795be1173340b40dada79f53677dab&amp;hash=83d48f9665e44f49c74666dc6d7f0309021d32ff68d5f5e60f012596fb0381f6&amp;host=68042c943591013ac2b2430a89b270f6af2c76d8dfd086a07176afe7c76c2c61&amp;pii=S1877050923009146&amp;tid=spdf-968135cb-3bfa-4c33-a3c1-1cca04634d21&amp;sid=204674d73502164d2e39d906b96cd73df6d1gxrqa&amp;type=client&amp;tsoh=d3d3LnNjaWVuY2VkaXJlY3QuY29t&amp;rh=d3d3LnNjaWVuY2VkaXJlY3QuY29t&amp;ua=18175957505651550051&amp;rr=957966e17b21280c&amp;cc=br">Artigo Evaluation of attention-based LSTM and Bi-LSTM networks for abstract text classification in systematic literature review automation</a> a fim de obter informações mais detalhadas sobre as bases para o Capítulo 2 (Fundamentação Teórica), Capítulo 4 (Método Proposto), Capítulo 5 (Estudos de Caso) e Capítulo 6 (Análise e Discussão de Resultados).</p>
+<p>O Fluxo executado pelo artigo envolve a utilização de 6 bases de dados, sendo 1 privada e 5 públicas. As 7 bases de dados foram enriquecidas usando metodologias descritas pelos próprios autores. A base de dados original <a href="https://github.com/asreview/synergy-dataset">SYNERGY dataset</a> e a base de dados enriquecida com anos recentes <a href="https://github.com/reginaofori/systematic-review-datasets">Systematic Review Datasets</a>.</p>
+<p>Cada base de dados possui os artigos inclusos e excluídos (presente na coluna <code>label_included</code>). Para a base de dados enriquecida, tem-se a seguinte comparação separada por base:</p>
+<table>
+<thead>
+<tr>
+<th>Índice</th>
+<th>Nome do conjunto de dados</th>
+<th>Tópico</th>
+<th>Incluídos</th>
+<th>Excluídos</th>
+<th>IR (incluído:excluído)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Aceves-Martins2021 (AM)*</td>
+<td>Saúde Bucal</td>
+<td>18</td>
+<td>789</td>
+<td>1:44</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Appenzeller-Herzog 2020 (AH)</td>
+<td>Doença de Wilson</td>
+<td>29</td>
+<td>3424</td>
+<td>1:118</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Bannach-Brown 2019 (BB)</td>
+<td>Modelo Animal de Depressão</td>
+<td>280</td>
+<td>1713</td>
+<td>1:6</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Cohen ACEInhibitors 2006 (CACE)</td>
+<td>Antipsicóticos atípicos</td>
+<td>146</td>
+<td>974</td>
+<td>1:7</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Cohen AtypicalAntipsychotics 2006 (CAA)</td>
+<td>ACE Inhibitors</td>
+<td>41</td>
+<td>2503</td>
+<td>1:61</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Cohen OralHypoglycemics 2006 (COH)</td>
+<td>Hipoglicemiantes orais</td>
+<td>136</td>
+<td>367</td>
+<td>1:3</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">Observação base de dados Aceves-Martins2021 (AM)*</p>
+<p>A base de dados Aceves-Martins2021 (AM) não será usada para os experimentos devido a falta de acesso a ela na internet. Com isso, para a tese de mestrado, será usada somente as públicas.</p>
+</div>
+<p>Após o enriquecimento das bases de dados, foi separado apenas as informações <code>{abstract, label_included}</code> de cada conjunto. O <code>abstract</code> foi tokenizado e depois mapeado usando o arquivo do Glove de 300 dimensões para obter uma matriz com vetores densos.</p>
+<p>No artigo, o treinamento ocorreu segundo os hiperparâmetros</p>
+<table>
+<thead>
+<tr>
+<th>Hiperparâmetro</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Embedding dimension</td>
+<td>300</td>
+</tr>
+<tr>
+<td>LSTM units</td>
+<td>100</td>
+</tr>
+<tr>
+<td>Bi-LSTM unitss</td>
+<td>100</td>
+</tr>
+<tr>
+<td>Optimiser</td>
+<td>Adam</td>
+</tr>
+<tr>
+<td>Learning rate (optimiser)</td>
+<td>3 * 10^(-4) for LSTM</td>
+</tr>
+<tr>
+<td>Learning rate (optimiser)</td>
+<td>3 * 10^(-4) for Bi-LSTM</td>
+</tr>
+<tr>
+<td>Dropout for LSTM</td>
+<td>0.2, 0.5</td>
+</tr>
+<tr>
+<td>Dropout for Bi-LSTM</td>
+<td>0.2, 0.02</td>
+</tr>
+<tr>
+<td>Batch size</td>
+<td>64</td>
+</tr>
+<tr>
+<td>Epochs</td>
+<td>10</td>
+</tr>
+</tbody>
+</table>
+<p>O artigo utilizou-se de dois experimentos. O primeiro com <code>SVM</code>, <code>LSTM + Glove</code> e <code>Bi-LSTM + Glove</code>. O segundo foi <code>LSTM + Glove + Attention</code> e <code>Bi-LSTM + Glove + Attention</code>.</p>
+<p><img alt="Fluxo Descrito no Artigo" src="../assets/2025_06_29_flow_article_experiment.png" /></p>
+<p>Com isso, cada base de dados foi submetida a uma simulação e ao final foi realizado um <strong>cross validation</strong> com os modelos já treinados. Ao final, foram obtidos as métricas:</p>
+<ul>
+<li>TP: True Positives — exemplos positivos corretamente classificados como positivos</li>
+<li>FP: False Positives — exemplos negativos incorretamente classificados como positivos</li>
+<li>TN: True Negatives — exemplos negativos corretamente classificados como negativos</li>
+<li>FN: False Negatives — exemplos positivos incorretamente classificados como negativos</li>
+<li>N: Number of Negatives — total de exemplos negativos no conjunto (geralmente: TN + FP)</li>
+<li>P: Precision — proporção de positivos preditos que são realmente positivos: P = TP/(TP + FP)</li>
+<li>R: Recall — taxa de verdadeiros positivos: R = TP/(TP + FN)</li>
+<li>F2: F2-Score — métrica F que dá mais peso ao recall (peso 2): F2 = 5 * P * R / (4 * (P + R))</li>
+</ul>
+<h2 id="resultados-obtidos">Resultados Obtidos</h2>
+<p>Os resultados obtidos foram os presentes na tabela abaixo:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Dataset</th>
+<th style="text-align: left;">Classifier</th>
+<th style="text-align: right;">TP_gerado</th>
+<th style="text-align: right;">FP_gerado</th>
+<th style="text-align: right;">TN_gerado</th>
+<th style="text-align: right;">FN_gerado</th>
+<th style="text-align: right;">N</th>
+<th style="text-align: right;">P_gerado</th>
+<th style="text-align: right;">R_gerado</th>
+<th style="text-align: right;">F2_gerado</th>
+<th style="text-align: right;">WSS95_gerado</th>
+<th style="text-align: right;">TP_pdf</th>
+<th style="text-align: right;">FP_pdf</th>
+<th style="text-align: right;">TN_pdf</th>
+<th style="text-align: right;">FN_pdf</th>
+<th style="text-align: right;">P_pdf</th>
+<th style="text-align: right;">R_pdf</th>
+<th style="text-align: right;">F2_pdf</th>
+<th style="text-align: right;">WSS95_pdf</th>
+<th style="text-align: right;">erro_P</th>
+<th style="text-align: right;">erro_R</th>
+<th style="text-align: right;">erro_F2</th>
+<th style="text-align: right;">erro_WSS95</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Appenzeller-Herzog_2020</td>
+<td style="text-align: left;">SVM with SGD + TF-IDF</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">2333</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2333</td>
+<td style="text-align: right;">0.0110216</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.0527812</td>
+<td style="text-align: right;">-0.05</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4423</td>
+<td style="text-align: right;">329</td>
+<td style="text-align: right;">468</td>
+<td style="text-align: right;">0.0117</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.0558</td>
+<td style="text-align: right;">4.28</td>
+<td style="text-align: right;">0.000678381</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.00301884</td>
+<td style="text-align: right;">4.33</td>
+</tr>
+<tr>
+<td style="text-align: left;">Appenzeller-Herzog_2020</td>
+<td style="text-align: left;">SVM with SGD + TF-IDF</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">2333</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2333</td>
+<td style="text-align: right;">0.0110216</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.0527812</td>
+<td style="text-align: right;">-0.05</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4423</td>
+<td style="text-align: right;">329</td>
+<td style="text-align: right;">468</td>
+<td style="text-align: right;">0.0117</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.0558</td>
+<td style="text-align: right;">4.28</td>
+<td style="text-align: right;">0.000678381</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.00301884</td>
+<td style="text-align: right;">4.33</td>
+</tr>
+<tr>
+<td style="text-align: left;">Appenzeller-Herzog_2020</td>
+<td style="text-align: left;">Bi-LSTM + GloVe</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">2333</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2333</td>
+<td style="text-align: right;">0.0110216</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.0527812</td>
+<td style="text-align: right;">-0.05</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">27044</td>
+<td style="text-align: right;">138</td>
+<td style="text-align: right;">239</td>
+<td style="text-align: right;">0.015</td>
+<td style="text-align: right;">0.9615</td>
+<td style="text-align: right;">0.0705</td>
+<td style="text-align: right;">24.25</td>
+<td style="text-align: right;">0.00397838</td>
+<td style="text-align: right;">0.0385</td>
+<td style="text-align: right;">0.0177188</td>
+<td style="text-align: right;">24.3</td>
+</tr>
+<tr>
+<td style="text-align: left;">Appenzeller-Herzog_2020</td>
+<td style="text-align: left;">Bi-LSTM + GloVe + Attention</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">2333</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2333</td>
+<td style="text-align: right;">0.0110216</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.0527812</td>
+<td style="text-align: right;">-0.05</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">472</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0215</td>
+<td style="text-align: right;">0.9615</td>
+<td style="text-align: right;">0.0986</td>
+<td style="text-align: right;">45.66</td>
+<td style="text-align: right;">0.0104784</td>
+<td style="text-align: right;">0.0385</td>
+<td style="text-align: right;">0.0458188</td>
+<td style="text-align: right;">45.71</td>
+</tr>
+<tr>
+<td style="text-align: left;">Appenzeller-Herzog_2020</td>
+<td style="text-align: left;">LSTM + GloVe</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">2333</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2333</td>
+<td style="text-align: right;">0.0110216</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.0527812</td>
+<td style="text-align: right;">-0.05</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">1980</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0081</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.039</td>
+<td style="text-align: right;">-5</td>
+<td style="text-align: right;">0.00292162</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0137812</td>
+<td style="text-align: right;">4.95</td>
+</tr>
+<tr>
+<td style="text-align: left;">Appenzeller-Herzog_2020</td>
+<td style="text-align: left;">LSTM + GloVe + Attention</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">2333</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2333</td>
+<td style="text-align: right;">0.0110216</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.0527812</td>
+<td style="text-align: right;">-0.05</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">472</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0132</td>
+<td style="text-align: right;">0.9474</td>
+<td style="text-align: right;">0.0623</td>
+<td style="text-align: right;">37.01</td>
+<td style="text-align: right;">0.00217838</td>
+<td style="text-align: right;">0.0526</td>
+<td style="text-align: right;">0.00951884</td>
+<td style="text-align: right;">37.06</td>
+</tr>
+</tbody>
+</table>
+<p>Os valores obtidos nas réplicas apresentaram desvios em relação aos relatados no artigo, especialmente nas métricas de WSS@95 e F2, que são sensíveis ao balanceamento de classes e aos thresholds de corte aplicados nos classificadores. Esses desvios indicam que os hiperparâmetros utilizados nos modelos reproduzidos podem não estar completamente ajustados conforme o artigo original, o que justifica novos experimentos de calibração.</p>
+<h2 id="problemas-encontrados">Problemas Encontrados</h2>
+<ul>
+<li>Resultados obtidos nos experimentos divergiram dos reportados no artigo original, especialmente nos valores de FP, WSS e F2-score.</li>
+<li>Diferenças podem ser atribuídas a:<ul>
+<li>Uso de thresholds padrão ao invés dos calibrados para Recall &gt;= 95%.</li>
+<li>Configurações de dropout e learning rate não exatas.</li>
+<li>Potencial diferença na amostragem ou divisão dos folds de cross-validation.</li>
+</ul>
+</li>
+<li>Falta de reprodutibilidade total por ausência de código-fonte oficial dos autores.</li>
+</ul>
+<h2 id="proximos-passos">Próximos Passos</h2>
+<ul>
+<li>Escrever capítulos restantes da dissertação baseado nos experimentos<ul>
+<li>Capítulo 2: Modelos utilizados</li>
+<li>Capítulo 3: Filtrar artigos importantes</li>
+<li>Capítulo 4: Descrever a metodologia aplicada</li>
+<li>Capítulo 5: Descrever os experimentos</li>
+</ul>
+</li>
+<li>Implementar um estudo sistemático de hiperparâmetros (com grid search ou optuna)</li>
+<li>Calibrar thresholds baseados no recall de 95% antes do cálculo das métricas</li>
+<li>Redigir um <strong>RFC (Request for Comments)</strong> interno sobre:<ul>
+<li>A expansão dos experimentos (novos modelos e datasets)</li>
+<li>Estratégias para análise de sensibilidade dos hiperparâmetros</li>
+</ul>
+</li>
+<li>Automatizar o pipeline de avaliação e comparação com benchmarks de artigos</li>
+</ul>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+    
+  </body>
+</html>
