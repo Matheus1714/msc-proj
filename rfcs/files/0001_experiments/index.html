@@ -14,13 +14,15 @@
         <link rel="prev" href="../../">
       
       
+        <link rel="next" href="../0002_hyperparams_sensibility/">
+      
       
       <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
     
     
       
-        <title>0001_experiments - Docs Projeto de Mestrado</title>
+        <title>RFC 0001 - Expansão dos Experimentos - Docs Projeto de Mestrado</title>
       
     
     
@@ -71,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#expansao-dos-experimentos-com-transformers-embeddings-contextuais-e-aprendizado-ativo" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -103,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              0001_experiments
+              RFC 0001 - Expansão dos Experimentos
             
           </span>
         </div>
@@ -584,18 +591,206 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    RFC 0001 - Expansão dos Experimentos
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
   <span class="md-ellipsis">
-    0001_experiments
+    RFC 0001 - Expansão dos Experimentos
     
   </span>
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#resumo" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resumo
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#motivacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      Motivação
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#proposta" class="md-nav__link">
+    <span class="md-ellipsis">
+      Proposta
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Proposta">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-modelos-a-serem-testados" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Modelos a serem testados
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-estrategias-de-vetorizacao-adicionais" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Estratégias de vetorização adicionais
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-aprendizado-ativo" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Aprendizado Ativo
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-calibracao-de-thresholds" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Calibração de Thresholds
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-novas-metricas-a-coletar" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Novas métricas a coletar
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alternativas-consideradas" class="md-nav__link">
+    <span class="md-ellipsis">
+      Alternativas Consideradas
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#impacto-compatibilidade" class="md-nav__link">
+    <span class="md-ellipsis">
+      Impacto / Compatibilidade
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implementação
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusao" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conclusão
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#referencias" class="md-nav__link">
+    <span class="md-ellipsis">
+      Referências
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0002_hyperparams_sensibility/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    0002_hyperparams_sensibility
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
       
     </li>
   
@@ -605,6 +800,66 @@
           </ul>
         </nav>
       
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Study
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Study
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../study/0001_text_classification_techniques/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Técnicas de Classificação de Textos
+    
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -634,6 +889,139 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#resumo" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resumo
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#motivacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      Motivação
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#proposta" class="md-nav__link">
+    <span class="md-ellipsis">
+      Proposta
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Proposta">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-modelos-a-serem-testados" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Modelos a serem testados
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-estrategias-de-vetorizacao-adicionais" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Estratégias de vetorização adicionais
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-aprendizado-ativo" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Aprendizado Ativo
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-calibracao-de-thresholds" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Calibração de Thresholds
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-novas-metricas-a-coletar" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Novas métricas a coletar
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alternativas-consideradas" class="md-nav__link">
+    <span class="md-ellipsis">
+      Alternativas Consideradas
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#impacto-compatibilidade" class="md-nav__link">
+    <span class="md-ellipsis">
+      Impacto / Compatibilidade
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implementação
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusao" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conclusão
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#referencias" class="md-nav__link">
+    <span class="md-ellipsis">
+      Referências
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -649,7 +1037,87 @@
 
 
 
-  <h1>0001_experiments</h1>
+<h1 id="expansao-dos-experimentos-com-transformers-embeddings-contextuais-e-aprendizado-ativo">Expansão dos Experimentos com Transformers, Embeddings Contextuais e Aprendizado Ativo</h1>
+<h2 id="resumo">Resumo</h2>
+<p>Este RFC propõe a expansão metodológica do projeto de mestrado por meio da introdução de modelos Transformer pré-treinados (como BioBERT e SciBERT), vetorização com embeddings contextualizados (ex: SBERT), e avaliação com técnicas de aprendizado ativo. O objetivo é atualizar o pipeline experimental para refletir o estado da arte em triagem automatizada de Revisões Sistemáticas da Literatura (RSL), especialmente em tarefas de classificação binária com alto desbalanceamento de classes e restrição de recall.</p>
+<h2 id="motivacao">Motivação</h2>
+<p>A literatura recente (2021–2025) mostra que modelos baseados em Transformers superam arquiteturas como LSTM e Bi-LSTM em tarefas de classificação de textos científicos. Além disso, o uso de embeddings contextualizados e estratégias de aprendizado ativo tem demonstrado ganhos substanciais em recall, WSS@95 e economia de esforço humano.</p>
+<p>Essa expansão se justifica pelos seguintes pontos:</p>
+<ul>
+<li>Resultados inconsistentes ao tentar replicar os experimentos do artigo base com LSTM.</li>
+<li>Existência de ferramentas públicas (ASReview, HuggingFace) que oferecem suporte direto a Transformers e Active Learning.</li>
+<li>A necessidade de investigar a aplicabilidade de métodos mais recentes e robustos.</li>
+</ul>
+<h2 id="proposta">Proposta</h2>
+<h3 id="1-modelos-a-serem-testados">1. Modelos a serem testados</h3>
+<p>BioBERT: modelo BERT pré-treinado com literatura biomédica (PubMed).</p>
+<ul>
+<li><code>SciBERT</code>: modelo BERT treinado com textos científicos (Semantic Scholar).</li>
+<li><code>PubMedBERT</code>: modelo treinado do zero com corpus PubMed.</li>
+<li><code>Sentence-BERT</code>: versão de BERT para embeddings de sentenças.</li>
+</ul>
+<p>Cada modelo será <code>fine-tuned</code> para a tarefa binária de inclusão/exclusão de resumos.</p>
+<h3 id="2-estrategias-de-vetorizacao-adicionais">2. Estratégias de vetorização adicionais</h3>
+<ul>
+<li><code>SBERT embeddings + SVM/XGBoost</code>: avaliação do uso de embeddings de sentença como entrada para modelos tradicionais.</li>
+<li>Comparação com GloVe, TF-IDF e FastText.</li>
+</ul>
+<h3 id="3-aprendizado-ativo">3. Aprendizado Ativo</h3>
+<p>Avaliação de desempenho com simulações de triagem ativa (CAL).</p>
+<p>Estratégias:</p>
+<ul>
+<li>Uncertainty sampling (baseado em entropia/softmax)<ul>
+<li>Random sampling (baseline)</li>
+<li>Core-set selection (caso viável)</li>
+</ul>
+</li>
+<li>Ferramenta sugerida: ASReview LAB (https://asreview.nl/)</li>
+</ul>
+<h3 id="4-calibracao-de-thresholds">4. Calibração de Thresholds</h3>
+<ul>
+<li>Ajuste de thresholds com base em:<ul>
+<li>Curvas Precision-Recall</li>
+<li>Platt Scaling</li>
+<li>Isotonic Regression</li>
+</ul>
+</li>
+<li>Foco em calibrar para Recall ≥ 95%.</li>
+</ul>
+<h3 id="5-novas-metricas-a-coletar">5. Novas métricas a coletar</h3>
+<ul>
+<li><code>WSS@95</code> (Work Saved over Sampling at 95% Recall)</li>
+<li><code>AUROC</code>, <code>PR-AUC</code>, tempo de inferência</li>
+<li>Simulação de triagem (número de resumos lidos até atingir 95% de recall)</li>
+</ul>
+<h2 id="alternativas-consideradas">Alternativas Consideradas</h2>
+<ul>
+<li>Continuar com LSTM apenas: descartado por limitação empírica e estado da arte defasado.</li>
+<li>Apenas usar Transformers sem aprendizado ativo: descartado por não capturar o comportamento real da triagem humana assistida por IA.</li>
+</ul>
+<h2 id="impacto-compatibilidade">Impacto / Compatibilidade</h2>
+<ul>
+<li>Impacto positivo: maior robustez dos resultados e alinhamento com a prática científica atual.</li>
+<li>Compatibilidade: plenamente compatível com o pipeline atual. A vetorização e modelos novos podem ser adicionados modularmente.</li>
+</ul>
+<h2 id="implementacao">Implementação</h2>
+<ul>
+<li>Usar <code>HuggingFace Transformers</code> para fine-tuning de modelos BERT.</li>
+<li>Integrar <code>sentence-transformers</code> para SBERT.</li>
+<li>Empacotar o pipeline com scripts reprodutíveis para cada experimento.</li>
+<li>Utilizar ASReview LAB para experimentos com aprendizado ativo.</li>
+</ul>
+<h2 id="conclusao">Conclusão</h2>
+<p>Esta RFC formaliza a proposta de modernização do pipeline experimental do projeto de mestrado, com foco em Transformer models, embeddings contextuais e aprendizado ativo. A implementação dessas melhorias está alinhada com o estado da arte e deve aumentar a validade e a relevância dos resultados obtidos.</p>
+<h2 id="referencias">Referências</h2>
+<ul>
+<li>Beltagy, I. et al. (2019). BioBERT.</li>
+<li>Lee, J. et al. (2020). PubMedBERT.</li>
+<li>Devlin, J. et al. (2018). BERT.</li>
+<li>Reimers, N., Gurevych, I. (2019). Sentence-BERT.</li>
+<li>Van de Schoot, R. et al. (2021). ASReview: Open-source tool for screening in SRs.</li>
+<li>https://asreview.nl/</li>
+<li>https://huggingface.co/models</li>
+</ul>
 
 
 
@@ -657,7 +1125,8 @@
 
 
 
-
+  
+  
 
 
 
