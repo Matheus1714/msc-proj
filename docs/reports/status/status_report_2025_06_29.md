@@ -1,8 +1,14 @@
 ---
 title: Status Report - 29/06/2025
+summary: Relatório de progresso referente ao mês de Junho de 2025 no projeto de mestrado.
+authors:
+    - Matheus Silva Martins Mota
+date: 2025-06-29
 ---
 
 # _Status Report_ - 29/06/2025
+
+![Status Report Figura](../assets/default.jpeg)
 
 ## Intrudução
 
