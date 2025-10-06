@@ -1,3 +1,5 @@
+from enum import Enum
+
 GOOGLE_DRIVE_FILES_ID = [
   ("UrinaryIncontinence.csv", "1CQXJvSpA7KVeGImypLSBPerPlzd-7Osp"),
   ("Hall_2012.csv", "1HUc4UxTQ3_4SaPz2FvXUkuB49Y5YNB1p"),
@@ -27,3 +29,6 @@ GOOGLE_DRIVE_FILES_ID = [
   ("Bos_2018.csv", "1H5yBNB_BtuHtxgcDLI7q1YfMiGwAxu-I"),
   ("Estrogens.csv", "1ASCDXZ1yP0GTaQYdbBvWRxmFdXNw-O1f"),
 ]
+
+class WorflowTaskQueue(Enum):
+  ML_TASK_QUEUE = "ml-task-queue"

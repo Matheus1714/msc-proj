@@ -10,7 +10,7 @@ from constants import GOOGLE_DRIVE_FILES_ID
 from temporalio.client import Client
 from src.workflows.data_preprocessing_workflow import DataPreprocessingWorkflow
 from src.default_types import DataPreprocessingWorkflowIn
-from src.workers.ml_worker import WorflowTaskQueue
+from constants import WorflowTaskQueue
 
 async def main():    
     load_dotenv()
@@ -22,7 +22,7 @@ async def main():
         
         await client.start_workflow(
             DataPreprocessingWorkflow.run,
-            DataPreprocessingWorkflowIn(
+            arg=DataPreprocessingWorkflowIn(
                 source_files=GOOGLE_DRIVE_FILES_ID,
                 output_path="data/academic_works.csv",
             ),

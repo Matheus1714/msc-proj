@@ -7,8 +7,7 @@ from src.workflows.data_preprocessing_workflow import DataPreprocessingWorkflow
 from src.activities.process_google_drive_file import process_google_drive_file
 from src.activities.merge_processed_data import merge_processed_data
 
-class WorflowTaskQueue(Enum):
-    ML_TASK_QUEUE = "ml-task-queue"
+from constants import WorflowTaskQueue
 
 ml_worker = {
     "workflows": [
