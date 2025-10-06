@@ -22,10 +22,10 @@ async def main():
         
         await client.start_workflow(
             DataPreprocessingWorkflow.run,
-            args=[DataPreprocessingWorkflowIn(
+            DataPreprocessingWorkflowIn(
                 source_files=GOOGLE_DRIVE_FILES_ID,
                 output_path="data/academic_works.csv",
-            )],
+            ),
             id=f"data-preprocessing-workflow-{uuid4()}",
             task_queue=WorflowTaskQueue.ML_TASK_QUEUE.value,
         )

@@ -6,6 +6,7 @@ from typing import (
   Tuple,
 )
 from datetime import datetime
+from dataclasses import dataclass
 
 Id = NewType("Id", str)
 
@@ -71,23 +72,29 @@ class MLSimulationWorkflowIn(TypedDict):
 class MLSimulationWorkflowOut(TypedDict):
   ...
 
-class DataPreprocessingWorkflowIn(TypedDict):
+@dataclass
+class DataPreprocessingWorkflowIn:
   source_files: List[Tuple[str, str]]
   output_path: str
 
-class DataPreprocessingWorkflowOut(TypedDict):
+@dataclass
+class DataPreprocessingWorkflowOut:
   total_processed_works: int
 
-class ProcessGoogleDriveFileIn(TypedDict):
+@dataclass
+class ProcessGoogleDriveFileIn:
   file_name: str
   file_id: str
 
-class ProcessGoogleDriveFileOut(TypedDict):
+@dataclass
+class ProcessGoogleDriveFileOut:
   file_name: str
 
-class MergeProcessedDataIn(TypedDict):
+@dataclass
+class MergeProcessedDataIn:
   all_processed_files: List[str]
   output_path: str
 
-class MergeProcessedDataOut(TypedDict):
+@dataclass
+class MergeProcessedDataOut:
   total_processed_works: int

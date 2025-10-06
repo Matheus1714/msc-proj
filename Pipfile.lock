@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "92e434a8ae18c6343b1107979a12f5435c22d93226cf7fae05a8da0ad13a2533"
+            "sha256": "810c3ede83b4a35cb93d4ed8eaf1c71cb72378570deb842282d43a5892408ea6"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -656,14 +656,6 @@
             "markers": "python_version >= '3.10'",
             "version": "==3.4.2"
         },
-        "nexus-rpc": {
-            "hashes": [
-                "sha256:d1b007af2aba186a27e736f8eaae39c03aed05b488084ff6c3d1785c9ba2ad38",
-                "sha256:d65ad6a2f54f14e53ebe39ee30555eaeb894102437125733fb13034a04a44553"
-            ],
-            "markers": "python_version >= '3.9'",
-            "version": "==1.1.0"
-        },
         "numpy": {
             "hashes": [
                 "sha256:038613e9fb8c72b0a41f025a7e4c3f0b7a1b5d768ece4796b674c8f3fe13efff",
@@ -1171,16 +1163,16 @@
         },
         "temporalio": {
             "hashes": [
-                "sha256:46394498f8822e61b3ce70d6735de7618f5af0501fb90f3f90f4b4f9e7816d77",
-                "sha256:552b360f9ccdac8d5fc5d19c6578c2f6f634399ccc37439c4794aa58487f7fd5",
-                "sha256:5a789e7c483582d6d7dd49e7d2d2730d82dc94d9342fe71be76fa67afa4e6865",
-                "sha256:748c0ec9f48aa1ab612a58fe516d9be28c1dd98194f560fd28a2ab09c6e2ca5e",
-                "sha256:a9f5cf75c4b887476a2b39d022a9c44c495f5eb1668087a022bd9258d3adddf9",
-                "sha256:f28a69394bf18b4a1c22a6a784d348e93482858c505d054570b278f0f5e13e9c"
+                "sha256:2f7bff9ac1fc832655342e9677bbee1b413b97857d1f2265f018ce72fb7758f8",
+                "sha256:4f5805e0d33ba525ccea01e3cd9d3eca313e0c66c6b86e6cb0f15ef004c0acc0",
+                "sha256:688400e4ca7f6b47c0ade3ebb6549e4d79b0762430ea735a0d8ff83b1ab8b8ba",
+                "sha256:81cb8bef8aef6d3cc130c7cecf008cf529177a2f9cb206cfba2897db7df9d093",
+                "sha256:81fd40eeeba0396a7193ab5b45877301234b983aa38e444dfceecad2b3224398",
+                "sha256:c3ee8416d1cab04036e03e39a4db4cf4a9a799750b8da20022e0d719da9c9371"
             ],
             "index": "pypi",
-            "markers": "python_version >= '3.9'",
-            "version": "==1.18.1"
+            "markers": "python_version >= '3.9' and python_version < '4.0'",
+            "version": "==1.10.0"
         },
         "tensorboard": {
             "hashes": [

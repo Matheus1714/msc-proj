@@ -13,9 +13,9 @@ tensorflow = "*"
 numpy = "*"
 scikit-learn = "*"
 openpyxl = "*"
-temporalio = "*"
 python-dotenv = "*"
 joblib = "*"
+temporalio = "==1.10.0"
 
 [dev-packages]
 mkdocs = "*"
