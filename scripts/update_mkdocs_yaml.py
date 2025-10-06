@@ -1,6 +1,4 @@
-import yaml
 from pathlib import Path
-from collections import defaultdict
 
 DOCS_DIR = Path("docs")
 MKDOCS_YML = Path("mkdocs.yaml")

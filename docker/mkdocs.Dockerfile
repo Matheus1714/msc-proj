@@ -1,8 +1,11 @@
-FROM python:3.10-slim
+FROM python:3.10-bullseye
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
+# Use Debian Bullseye which is more stable
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
     git curl build-essential && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
