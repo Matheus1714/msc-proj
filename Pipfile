@@ -18,9 +18,9 @@ python-dotenv = "*"
 joblib = "*"
 
 [dev-packages]
-ipykernel = "*"
 mkdocs = "*"
 mkdocs-material = "*"
+ipykernel = "*"
 
 [requires]
 python_version = "3.10"
