@@ -2,3 +2,9 @@ artigos
 data/word_vectors/*
 data/results/
 site/
+
+.env
+.venv
+**/__pycache__
+**/*.pkl
+**/*.DS_Store
