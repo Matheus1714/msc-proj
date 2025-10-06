@@ -74,7 +74,6 @@ class MLSimulationWorkflowOut(TypedDict):
 
 @dataclass
 class DataPreprocessingWorkflowIn:
-  source_files: List[Tuple[str, str]]
   output_path: str
 
 @dataclass
@@ -88,13 +87,9 @@ class ProcessGoogleDriveFileIn:
 
 @dataclass
 class ProcessGoogleDriveFileOut:
-  file_name: str
+  file_path: str
 
 @dataclass
 class MergeProcessedDataIn:
   all_processed_files: List[str]
   output_path: str
-
-@dataclass
-class MergeProcessedDataOut:
-  total_processed_works: int

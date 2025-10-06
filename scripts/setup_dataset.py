@@ -7,7 +7,7 @@ import json
 from utils import setup_project_path
 setup_project_path()
 
-from constants import GOOGLE_DRIVE_FILES_ID
+from constants import SOURCE_INPUT_FILES
 from src.default_types import AcademicWork
 
 data = []
@@ -15,7 +15,7 @@ data = []
 def generate_deterministic_id(metadata: Dict[str, str]) -> str:
     return hashlib.sha256(json.dumps(metadata).encode()).hexdigest()
 
-for file_name, file_id in GOOGLE_DRIVE_FILES_ID:
+for file_name, file_id in SOURCE_INPUT_FILES:
     url = f"https://drive.google.com/uc?id={file_id}"
 
     try:

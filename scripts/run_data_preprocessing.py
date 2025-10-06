@@ -6,7 +6,6 @@ from uuid import uuid4
 from utils import setup_project_path
 setup_project_path()
 
-from constants import GOOGLE_DRIVE_FILES_ID
 from temporalio.client import Client
 from src.workflows.data_preprocessing_workflow import DataPreprocessingWorkflow
 from src.default_types import DataPreprocessingWorkflowIn
@@ -18,12 +17,9 @@ async def main():
     try:
         client = await Client.connect(os.environ.get("TEMPORAL_CONNECT"))
         
-        print(f"📊 Iniciando pre-processamento de {len(GOOGLE_DRIVE_FILES_ID)} arquivos...")
-        
         await client.start_workflow(
             DataPreprocessingWorkflow.run,
             arg=DataPreprocessingWorkflowIn(
-                source_files=GOOGLE_DRIVE_FILES_ID,
                 output_path="data/academic_works.csv",
             ),
             id=f"data-preprocessing-workflow-{uuid4()}",

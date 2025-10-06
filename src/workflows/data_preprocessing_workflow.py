@@ -4,8 +4,8 @@ from typing import List
 from datetime import timedelta
 from temporalio.common import RetryPolicy
 
-from src.activities.process_google_drive_file import process_google_drive_file
-from src.activities.merge_processed_data import merge_processed_data
+from src.activities.process_files_activity import process_files_activity
+from src.activities.merge_processed_files_activity import merge_processed_files_activity
 from constants import WorflowTaskQueue
 
 from src.default_types import (
@@ -16,43 +16,53 @@ from src.default_types import (
   MergeProcessedDataIn,
 )
 
+from constants import SOURCE_INPUT_FILES
+
 @workflow.defn
 class DataPreprocessingWorkflow:
   @workflow.run
   async def run(self, data: DataPreprocessingWorkflowIn) -> DataPreprocessingWorkflowOut:
     try:
-      workflow.logger.info(f"Iniciando pre-processamento de {len(data.source_files)} arquivos")
+      workflow.logger.info(f"Iniciando pre-processamento de {len(SOURCE_INPUT_FILES)} arquivos")
       
-      processing_tasks = [
-        workflow.execute_activity(
-          process_google_drive_file,
-          arg=ProcessGoogleDriveFileIn(file_name=file_name, file_id=file_id),
-          start_to_close_timeout=timedelta(minutes=10),
-          retry_policy=RetryPolicy(
-            initial_interval=timedelta(seconds=1),
-            maximum_interval=timedelta(minutes=1),
-            maximum_attempts=3,
-          ),
-          task_queue=WorflowTaskQueue.ML_TASK_QUEUE.value,
-        )
-        for file_name, file_id in data.source_files
-      ]
+      concurrency = 5
+      all_processed_files: List[ProcessGoogleDriveFileOut | None] = []
       
-      workflow.logger.info("Aguardando processamento paralelo de todos os arquivos...")
-      all_processed_files: List[ProcessGoogleDriveFileOut] = await asyncio.gather(*processing_tasks)
+      for i in range(0, len(SOURCE_INPUT_FILES), concurrency):
+        current_batch = SOURCE_INPUT_FILES[i:i+concurrency]
+        workflow.logger.info(f"Processando lote {i//concurrency + 1} com {len(current_batch)} arquivos...")
+        batch_tasks = [
+          workflow.execute_activity(
+            process_files_activity,
+            arg=ProcessGoogleDriveFileIn(
+              file_name=file_name,
+              file_id=file_id,
+            ),
+            start_to_close_timeout=timedelta(minutes=10),
+            retry_policy=RetryPolicy(
+              initial_interval=timedelta(minutes=1),
+              maximum_interval=timedelta(minutes=5),
+              maximum_attempts=3,
+            ),
+            task_queue=WorflowTaskQueue.ML_TASK_QUEUE.value,
+          )
+          for file_name, file_id in current_batch
+        ]
+        batch_results: List[ProcessGoogleDriveFileOut | None] = await asyncio.gather(*batch_tasks)
+        all_processed_files.extend(batch_results)
       
-      valid_data = [data for data in all_processed_files if data]
-      workflow.logger.info(f"Processados com sucesso {len(valid_data)} de {len(data.source_files)} arquivos")
+      valid_paths = [d.file_path for d in all_processed_files if d is not None]
+      workflow.logger.info(f"Processados com sucesso {len(valid_paths)} de {len(SOURCE_INPUT_FILES)} arquivos")
       
-      total_works = await workflow.execute_activity(
-        merge_processed_data,
-        arg=MergeProcessedDataIn(all_processed_files=valid_data, output_path=data.output_path),
+      total_processed = await workflow.execute_activity(
+        merge_processed_files_activity,
+        arg=MergeProcessedDataIn(all_processed_files=valid_paths, output_path=data.output_path),
         start_to_close_timeout=timedelta(minutes=5),
         task_queue=WorflowTaskQueue.ML_TASK_QUEUE.value,
       )
       
-      workflow.logger.info(f"Pre-processamento concluído: {total_works} trabalhos salvos")
-      return total_works
+      workflow.logger.info(f"Pre-processamento concluído: {total_processed} trabalhos salvos")
+      return DataPreprocessingWorkflowOut(total_processed_works=total_processed)
 
     except Exception as e:
       workflow.logger.error(f"Erro ao executar workflow: {e}")

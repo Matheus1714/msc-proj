@@ -1,6 +1,7 @@
 artigos
 data/word_vectors/*
 data/results/
+data/*
 site/
 
 .env

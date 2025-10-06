@@ -4,8 +4,8 @@ from temporalio.worker import UnsandboxedWorkflowRunner
 from src.workflows.ml_simulation_workflow import MLSimulationWorkflow
 from src.workflows.data_preprocessing_workflow import DataPreprocessingWorkflow
 
-from src.activities.process_google_drive_file import process_google_drive_file
-from src.activities.merge_processed_data import merge_processed_data
+from src.activities.process_files_activity import process_files_activity
+from src.activities.merge_processed_files_activity import merge_processed_files_activity
 
 from constants import WorflowTaskQueue
 
@@ -15,8 +15,8 @@ ml_worker = {
         DataPreprocessingWorkflow,
     ],
     "activities": [
-        process_google_drive_file,
-        merge_processed_data,
+        process_files_activity,
+        merge_processed_files_activity,
     ],
     "workflow_runner": UnsandboxedWorkflowRunner(),
     "task_queue": WorflowTaskQueue.ML_TASK_QUEUE.value,
