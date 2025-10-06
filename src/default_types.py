@@ -3,6 +3,7 @@ from typing import (
   List,
   Dict,
   NewType,
+  Tuple,
 )
 from datetime import datetime
 
@@ -69,3 +70,24 @@ class MLSimulationWorkflowIn(TypedDict):
 
 class MLSimulationWorkflowOut(TypedDict):
   ...
+
+class DataPreprocessingWorkflowIn(TypedDict):
+  source_files: List[Tuple[str, str]]
+  output_path: str
+
+class DataPreprocessingWorkflowOut(TypedDict):
+  total_processed_works: int
+
+class ProcessGoogleDriveFileIn(TypedDict):
+  file_name: str
+  file_id: str
+
+class ProcessGoogleDriveFileOut(TypedDict):
+  file_name: str
+
+class MergeProcessedDataIn(TypedDict):
+  all_processed_files: List[str]
+  output_path: str
+
+class MergeProcessedDataOut(TypedDict):
+  total_processed_works: int

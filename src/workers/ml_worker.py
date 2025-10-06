@@ -2,13 +2,24 @@ from enum import Enum
 from temporalio.worker import UnsandboxedWorkflowRunner
 
 from src.workflows.ml_simulation_workflow import MLSimulationWorkflow
+from src.workflows.data_preprocessing_workflow import DataPreprocessingWorkflow
+
+from src.activities.process_google_drive_file import process_google_drive_file
+from src.activities.merge_processed_data import merge_processed_data
 
 class WorflowTaskQueue(Enum):
     ML_TASK_QUEUE = "ml-task-queue"
+    DATA_PREPROCESSING_TASK_QUEUE = "data-preprocessing-task-queue"
 
 ml_worker = {
-    "workflows": [MLSimulationWorkflow],
-    "activities": [],
+    "workflows": [
+        MLSimulationWorkflow,
+        DataPreprocessingWorkflow,
+    ],
+    "activities": [
+        process_google_drive_file,
+        merge_processed_data,
+    ],
     "workflow_runner": UnsandboxedWorkflowRunner(),
     "task_queue": WorflowTaskQueue.ML_TASK_QUEUE.value,
 }
