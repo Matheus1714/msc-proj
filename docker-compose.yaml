@@ -9,3 +9,39 @@ services:
       - .:/app
     ports:
       - "8000:8000"
+
+  temporal-ui:
+    image: temporalio/ui:latest
+    ports:
+      - 8080:8080
+    environment:
+      - TEMPORAL_ADDRESS=temporal:7233
+    depends_on:
+      - temporal
+
+  temporal:
+    image: temporalio/auto-setup:latest
+    ports:
+      - 7233:7233
+    environment:
+        - DB=postgres12_pgx
+        - DB_PORT=5432
+        - POSTGRES_USER=temporal
+        - POSTGRES_PWD=temporal
+        - POSTGRES_SEEDS=temporal-database
+    depends_on:
+      - temporal-database
+
+  temporal-database:
+    image: postgres:15
+    environment:
+      - POSTGRES_USER=temporal
+      - POSTGRES_PASSWORD=temporal
+      - POSTGRES_DB=temporal
+    ports:
+      - 5434:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
