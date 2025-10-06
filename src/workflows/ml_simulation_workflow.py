@@ -8,5 +8,5 @@ from src.default_types import (
 @workflow.defn
 class MLSimulationWorkflow:
     @workflow.run
-    async def run(self, data: MLSimulationWorkflowIn) -> MLSimulationWorkflowOut:
+    async def run(data: MLSimulationWorkflowIn) -> MLSimulationWorkflowOut:
         ...

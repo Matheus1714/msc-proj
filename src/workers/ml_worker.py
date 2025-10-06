@@ -9,7 +9,6 @@ from src.activities.merge_processed_data import merge_processed_data
 
 class WorflowTaskQueue(Enum):
     ML_TASK_QUEUE = "ml-task-queue"
-    DATA_PREPROCESSING_TASK_QUEUE = "data-preprocessing-task-queue"
 
 ml_worker = {
     "workflows": [

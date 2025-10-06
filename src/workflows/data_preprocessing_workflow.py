@@ -15,7 +15,7 @@ from src.default_types import (
 @workflow.defn
 class DataPreprocessingWorkflow:
   @workflow.run
-  async def run(self, data: DataPreprocessingWorkflowIn) -> DataPreprocessingWorkflowOut:
+  async def run(data: DataPreprocessingWorkflowIn) -> DataPreprocessingWorkflowOut:
       
     workflow.logger.info(f"Iniciando pre-processamento de {len(data['source_files'])} arquivos")
     
