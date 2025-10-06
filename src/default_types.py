@@ -83,7 +83,7 @@ class DataPreprocessingWorkflowOut:
 @dataclass
 class ProcessGoogleDriveFileIn:
   file_name: str
-  file_id: str
+  file_path: str
 
 @dataclass
 class ProcessGoogleDriveFileOut:

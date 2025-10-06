@@ -19,11 +19,10 @@ async def process_files_activity(params: ProcessGoogleDriveFileIn) -> ProcessGoo
   else:
     file_name = params.file_name
     
-  url = f"https://drive.google.com/uc?id={params.file_id}"
   works = []
 
   try:
-    df = pd.read_csv(url)
+    df = pd.read_csv(params.file_path)
   except Exception as e:
     activity.logger.error(f"Erro ao ler {file_name}: {e}")
     return None

@@ -36,17 +36,17 @@ class DataPreprocessingWorkflow:
             process_files_activity,
             arg=ProcessGoogleDriveFileIn(
               file_name=file_name,
-              file_id=file_id,
+              file_path=file_path,
             ),
             start_to_close_timeout=timedelta(minutes=10),
             retry_policy=RetryPolicy(
-              initial_interval=timedelta(minutes=1),
-              maximum_interval=timedelta(minutes=5),
+              initial_interval=timedelta(seconds=5),
+              maximum_interval=timedelta(seconds=10),
               maximum_attempts=3,
             ),
             task_queue=WorflowTaskQueue.ML_TASK_QUEUE.value,
           )
-          for file_name, file_id in current_batch
+          for file_name, file_path in current_batch
         ]
         batch_results: List[ProcessGoogleDriveFileOut | None] = await asyncio.gather(*batch_tasks)
         all_processed_files.extend(batch_results)

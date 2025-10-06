@@ -1,7 +1,7 @@
-from .process_google_drive_file import process_google_drive_file
-from .merge_processed_data import merge_processed_data
+from .process_files_activity import process_files_activity
+from .merge_processed_files_activity import merge_processed_files_activity
 
 __all__ = [
-  "process_google_drive_file",
-  "merge_processed_data",
+  "process_files_activity",
+  "merge_processed_files_activity",
 ]
