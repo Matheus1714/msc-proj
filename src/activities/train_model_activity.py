@@ -6,7 +6,7 @@ import os
 from src.default_types import TrainModelIn, TrainModelOut, ModelConfig
 
 @activity.defn
-def train_model_activity(data: TrainModelIn) -> TrainModelOut:
+async def train_model_activity(data: TrainModelIn) -> TrainModelOut:
     """
     Treina um modelo de classificação baseado na configuração fornecida.
     Suporta SVM e Random Forest.
@@ -32,7 +32,7 @@ def train_model_activity(data: TrainModelIn) -> TrainModelOut:
     )
 
 @activity.defn
-def train_svm_activity(data: TrainModelIn) -> TrainModelOut:
+async def train_svm_activity(data: TrainModelIn) -> TrainModelOut:
     """Treina especificamente um modelo SVM."""
     # TODO: Implementar treinamento SVM
     # from sklearn.svm import SVC
@@ -52,7 +52,7 @@ def train_svm_activity(data: TrainModelIn) -> TrainModelOut:
     )
 
 @activity.defn
-def train_random_forest_activity(data: TrainModelIn) -> TrainModelOut:
+async def train_random_forest_activity(data: TrainModelIn) -> TrainModelOut:
     """Treina especificamente um modelo Random Forest."""
     # TODO: Implementar treinamento Random Forest
     # from sklearn.ensemble import RandomForestClassifier

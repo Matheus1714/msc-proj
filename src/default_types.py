@@ -4,6 +4,7 @@ from typing import (
   Dict,
   NewType,
   Tuple,
+  Any,
 )
 from datetime import datetime
 from dataclasses import dataclass
@@ -123,10 +124,10 @@ class SimulateModelWorkflowOut:
   result: str
 
 @dataclass
-class ModelConfig(TypedDict):
+class ModelConfig:
   name: str
   type: str  # "svm", "random_forest", etc.
-  hyperparameters: Dict[str, any]
+  hyperparameters: Dict[str, Any]
 
 @dataclass
 class ExperimentWorkflowIn:

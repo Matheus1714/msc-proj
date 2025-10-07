@@ -5,7 +5,7 @@ import json
 from src.default_types import AggregateResultsIn, AggregateResultsOut
 
 @activity.defn
-def aggregate_results_activity(data: AggregateResultsIn) -> AggregateResultsOut:
+async def aggregate_results_activity(data: AggregateResultsIn) -> AggregateResultsOut:
     """
     Agrega resultados de validação e produção em um relatório final.
     """

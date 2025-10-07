@@ -6,7 +6,7 @@ import json
 from src.default_types import RunProductionInferenceIn, RunProductionInferenceOut
 
 @activity.defn
-def run_production_inference_activity(data: RunProductionInferenceIn) -> RunProductionInferenceOut:
+async def run_production_inference_activity(data: RunProductionInferenceIn) -> RunProductionInferenceOut:
     """
     Executa inferência em dados de produção usando modelo treinado.
     Calcula métricas finais de performance.

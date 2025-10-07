@@ -6,7 +6,7 @@ import json
 from src.default_types import ValidateModelIn, ValidateModelOut
 
 @activity.defn
-def validate_model_activity(data: ValidateModelIn) -> ValidateModelOut:
+async def validate_model_activity(data: ValidateModelIn) -> ValidateModelOut:
     """
     Valida um modelo treinado usando dados de validação.
     Calcula métricas de performance.
