@@ -1,7 +1,6 @@
 from enum import Enum
 from temporalio.worker import UnsandboxedWorkflowRunner
 
-from src.workflows.ml_simulation_workflow import MLSimulationWorkflow
 from src.workflows.data_preprocessing_workflow import DataPreprocessingWorkflow
 from src.workflows.experiment_workflow import ExperimentWorkflow
 from src.workflows.tokenizer_shared_workflow import TokenizeSharedWorkflow
@@ -23,7 +22,6 @@ from constants import WorflowTaskQueue
 
 ml_worker = {
     "workflows": [
-        MLSimulationWorkflow,
         DataPreprocessingWorkflow,
         ExperimentWorkflow,
         TokenizeSharedWorkflow,
