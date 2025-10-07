@@ -21,6 +21,8 @@ markdown_extensions:
 - pymdownx.superfences
 nav:
 - Início: index.md
+- experiment_flow_diagram: experiment_flow_diagram.md
+- experiment_workflow_structure: experiment_workflow_structure.md
 - Outros:
   - Outros: others/index.md
   - Cronograma: others/schedule.md

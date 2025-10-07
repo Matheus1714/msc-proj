@@ -1,4 +1,5 @@
 from pathlib import Path
+import yaml
 
 DOCS_DIR = Path("docs")
 MKDOCS_YML = Path("mkdocs.yaml")
