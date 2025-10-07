@@ -44,7 +44,7 @@ async def main():
         
         print("✅ Experimento iniciado com sucesso!")
         print(f"📊 Dataset: {experiment_input.dataset_id}")
-        print(f"🤖 Modelo: {model_config['name']} ({model_config['type']})")
+        print(f"🤖 Modelo: {model_config.name} ({model_config.type})")
         print(f"🔤 Tokenização: {experiment_input.tokenizer_strategy}")
         
     except Exception as e:
