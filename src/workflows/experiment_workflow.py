@@ -52,9 +52,9 @@ class ExperimentWorkflow:
       SimulateModelWorkflow.run,
       SimulateModelWorkflowIn(
         file_path=tokenized_data.tokenized_data_path,
-        strategy=data.model_config.get("type", "")
+        strategy=data.model_config.type
       ),
-      id=f"simulate-{data.dataset_id}-{data.model_config['name']}",
+      id=f"simulate-{data.dataset_id}-{data.model_config.name}",
     )
 
     return ExperimentWorkflowOut(

@@ -5,6 +5,7 @@ from typing import (
   NewType,
   Tuple,
   Any,
+  Optional,
 )
 from datetime import datetime
 from dataclasses import dataclass
@@ -134,7 +135,7 @@ class ExperimentWorkflowIn:
   dataset_id: str
   model_config: ModelConfig
   tokenizer_strategy: str
-  model_path: str = None  # Se fornecido, não treina novamente
+  model_path: Optional[str] = None  # Se fornecido, não treina novamente
 
 @dataclass
 class ExperimentWorkflowOut:
