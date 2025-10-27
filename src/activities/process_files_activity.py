@@ -26,6 +26,8 @@ async def process_files_activity(params: ProcessGoogleDriveFileIn) -> ProcessGoo
   except Exception as e:
     activity.logger.error(f"Erro ao ler {file_name}: {e}")
     return None
+  
+  df = df.dropna(subset = ["title", "abstract", "label_included"])
 
   db_source = (
     file_name
