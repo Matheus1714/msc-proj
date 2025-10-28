@@ -19,7 +19,6 @@ async def prepare_data_for_experiment_activity(data: PrepareDataForExperimentIn)
   os.makedirs(os.path.dirname(data.output_data_path), exist_ok=True)
   
   df = pd.read_csv(data.input_data_path)
-  df = df.head(50).copy() ## TODO: Remover daqui quando for para produção
   df = df.sample(frac=1, random_state=data.random_state).reset_index(drop=True)
 
   df["included"] = df["included"].astype(bool)
