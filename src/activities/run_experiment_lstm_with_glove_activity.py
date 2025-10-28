@@ -86,7 +86,7 @@ def _build_model(
   return Model(inputs, outputs)
 
 @activity.defn
-async def run_experiment_lstm_with_glove(data: RunExperimentLSTMWithGloveIn) -> RunExperimentLSTMWithGloveOut:
+async def run_experiment_lstm_with_glove_activity(data: RunExperimentLSTMWithGloveIn) -> RunExperimentLSTMWithGloveOut:
   x_train_full = np.load(data.x_train_path)
   y_train_full = np.load(data.y_train_path)
   embedding_matrix = np.load(data.embedding_matrix_path)

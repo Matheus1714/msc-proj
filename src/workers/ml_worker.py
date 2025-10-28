@@ -18,13 +18,14 @@ from src.activities.split_data_activity import split_data_activity
 from src.workflows.experiment_svm_with_glove_and_tfidf_workflow import ExperimentSVMWithGloveAndTFIDFWorkflow
 from src.workflows.experiment_lstm_with_glove_workflow import ExperimentLSTMWithGloveWorkflow
 from src.workflows.experiment_lstm_with_glove_and_attention_workflow import ExperimentLSTMWithGloveAndAttentionWorkflow
+from src.workflows.experiment_bi_lstm_with_glove_workflow import ExperimentBiLSTMWithGloveWorkflow
 
 # Experiments Activities
 
 from src.activities.run_experiment_svm_with_glove_and_tfidf_activity import run_experiment_svm_with_glove_and_tfidf_activity
-from src.activities.run_experiment_lstm_with_glove import run_experiment_lstm_with_glove
-from src.activities.run_experiment_lstm_with_glove_and_attention_activity import run_experiment_lstm_with_glove_and_attention
-
+from src.activities.run_experiment_lstm_with_glove_activity import run_experiment_lstm_with_glove_activity
+from src.activities.run_experiment_lstm_with_glove_and_attention_activity import run_experiment_lstm_with_glove_and_attention_activity
+from src.activities.run_experiment_bi_lstm_with_glove_activity import run_experiment_bi_lstm_with_glove_activity
 
 from constants import WorflowTaskQueue
 
@@ -34,11 +35,13 @@ ml_worker = {
         ExperimentSVMWithGloveAndTFIDFWorkflow,
         ExperimentLSTMWithGloveWorkflow,
         ExperimentLSTMWithGloveAndAttentionWorkflow,
+        ExperimentBiLSTMWithGloveWorkflow,
     ],
     "activities": [
         run_experiment_svm_with_glove_and_tfidf_activity,
-        run_experiment_lstm_with_glove,
-        run_experiment_lstm_with_glove_and_attention,
+        run_experiment_lstm_with_glove_activity,
+        run_experiment_lstm_with_glove_and_attention_activity,
+        run_experiment_bi_lstm_with_glove_activity,
         process_files_activity,
         merge_processed_files_activity,
         load_glove_embeddings_activity,

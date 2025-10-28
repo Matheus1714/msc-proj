@@ -24,7 +24,7 @@ from src.activities.split_data_activity import (
   SplitDataOut,
 )
 from src.activities.run_experiment_lstm_with_glove_and_attention_activity import (
-  run_experiment_lstm_with_glove_and_attention,
+  run_experiment_lstm_with_glove_and_attention_activity,
   RunExperimentLSTMWithGloveAndAttentionIn,
 )
 from constants import (
@@ -112,7 +112,7 @@ class ExperimentLSTMWithGloveAndAttentionWorkflow:
     )
 
     await workflow.execute_activity(
-      run_experiment_lstm_with_glove_and_attention,
+      run_experiment_lstm_with_glove_and_attention_activity,
       arg=RunExperimentLSTMWithGloveAndAttentionIn(
         input_data_path=data.input_data_path,
         x_train_path=split_data_result.x_train_path,

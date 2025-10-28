@@ -1,3 +1,4 @@
+import os
 from dataclasses import dataclass
 from temporalio import activity
 
@@ -16,14 +17,15 @@ from tensorflow.keras.layers import (
   LSTM,
   Dense,
   Dropout,
+  GlobalAveragePooling1D,
+  Bidirectional,
 )
 
 from src.utils.calculate_metrics import calculate_metrics, EvaluationData
 from src.utils.convert_to_native import convert_to_native
-from src.models.attention import BahdanauAttention
 
 @dataclass
-class RunExperimentLSTMWithGloveAndAttentionIn:
+class RunExperimentBiLSTMWithGloveIn:
   input_data_path: str
   x_train_path: str
   y_train_path: str
@@ -49,7 +51,7 @@ class RunExperimentLSTMWithGloveAndAttentionIn:
   class_weight_1: float
 
 @dataclass
-class RunExperimentLSTMWithGloveAndAttentionOut:
+class RunExperimentBiLSTMWithGloveOut:
   metrics: EvaluationData
 
 def _build_model(
@@ -73,19 +75,19 @@ def _build_model(
     trainable=False
   )(inputs)
 
-  x = LSTM(
+  x = Bidirectional(LSTM(
     lstm_units,
     dropout=lstm_dropout,
     recurrent_dropout=lstm_recurrent_dropout,
     return_sequences=True
-  )(embedding)
-  x = BahdanauAttention(100)(x, x)
+  ))(embedding)
+  x = GlobalAveragePooling1D()(x)
   x = Dropout(pool_dropout)(x)
   outputs = Dense(dense_units, activation=dense_activation)(x)
   return Model(inputs, outputs)
 
 @activity.defn
-async def run_experiment_lstm_with_glove_and_attention_activity(data: RunExperimentLSTMWithGloveAndAttentionIn) -> RunExperimentLSTMWithGloveAndAttentionOut:
+async def run_experiment_bi_lstm_with_glove_activity(data: RunExperimentBiLSTMWithGloveIn) -> RunExperimentBiLSTMWithGloveOut:
   x_train_full = np.load(data.x_train_path)
   y_train_full = np.load(data.y_train_path)
   embedding_matrix = np.load(data.embedding_matrix_path)
@@ -148,4 +150,4 @@ async def run_experiment_lstm_with_glove_and_attention_activity(data: RunExperim
 
   metrics = calculate_metrics(y_train_full, y_scores)
 
-  return RunExperimentLSTMWithGloveAndAttentionOut(metrics=convert_to_native(metrics))
+  return RunExperimentBiLSTMWithGloveOut(metrics=convert_to_native(metrics))

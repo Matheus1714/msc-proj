@@ -23,9 +23,9 @@ from src.activities.split_data_activity import (
   SplitDataIn,
   SplitDataOut,
 )
-from src.activities.run_experiment_lstm_with_glove_activity import (
-  run_experiment_lstm_with_glove_activity,
-  RunExperimentLSTMWithGloveIn,
+from src.activities.run_experiment_bi_lstm_with_glove_activity import (
+  run_experiment_bi_lstm_with_glove_activity,
+  RunExperimentBiLSTMWithGloveIn,
 )
 from constants import (
   WorflowTaskQueue,
@@ -33,7 +33,7 @@ from constants import (
   GLOVE_EMBEDDINGS_PATH,
 )
 
-class ExperimentLSTMWithGloveHyperparameters(TypedDict):
+class ExperimentBiLSTMWithGloveHyperparameters(TypedDict):
   max_words: int
   max_len: int
   embedding_dim: int
@@ -55,18 +55,18 @@ class ExperimentLSTMWithGloveHyperparameters(TypedDict):
   class_weight_1: float
 
 @dataclass
-class ExperimentLSTMWithGloveWorkflowIn:
+class ExperimentBiLSTMWithGloveWorkflowIn:
   input_data_path: str
-  hyperparameters: ExperimentLSTMWithGloveHyperparameters
+  hyperparameters: ExperimentBiLSTMWithGloveHyperparameters
 
 @dataclass
-class ExperimentLSTMWithGloveWorkflowOut:
+class ExperimentBiLSTMWithGloveWorkflowOut:
   ...
 
 @workflow.defn
-class ExperimentLSTMWithGloveWorkflow:
+class ExperimentBiLSTMWithGloveWorkflow:
   @workflow.run
-  async def run(self, data: ExperimentLSTMWithGloveWorkflowIn) -> ExperimentLSTMWithGloveWorkflowOut:
+  async def run(self, data: ExperimentBiLSTMWithGloveWorkflowIn) -> ExperimentBiLSTMWithGloveWorkflowOut:
     prepare_data_for_experiment_result: PrepareDataForExperimentOut = await workflow.execute_activity(
       prepare_data_for_experiment_activity,
       arg=PrepareDataForExperimentIn(
@@ -112,8 +112,8 @@ class ExperimentLSTMWithGloveWorkflow:
     )
 
     await workflow.execute_activity(
-      run_experiment_lstm_with_glove_activity,
-      arg=RunExperimentLSTMWithGloveIn(
+      run_experiment_bi_lstm_with_glove_activity,
+      arg=RunExperimentBiLSTMWithGloveIn(
         input_data_path=data.input_data_path,
         x_train_path=split_data_result.x_train_path,
         y_train_path=split_data_result.y_train_path,
@@ -142,4 +142,4 @@ class ExperimentLSTMWithGloveWorkflow:
       task_queue=WorflowTaskQueue.ML_TASK_QUEUE.value,
     )
 
-    return ExperimentLSTMWithGloveWorkflowOut()
+    return ExperimentBiLSTMWithGloveWorkflowOut()
