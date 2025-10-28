@@ -36,6 +36,7 @@ from src.workflows.experiment_bi_lstm_with_glove_and_attention_workflow import (
 )
 from constants import WorflowTaskQueue
 from src.utils.calculate_metrics import EvaluationData
+from src.utils.system_metrics import SystemMetrics, SystemMetricsCollector
 
 @dataclass
 class ExperimentsWorkflowIn:
@@ -48,6 +49,7 @@ class ExperimentResult:
   status: str  # "success" or "failed"
   execution_time_minutes: float = None
   metrics: EvaluationData = None
+  system_metrics: SystemMetrics = None
   error_message: str = None
 
 @dataclass
@@ -67,6 +69,7 @@ class ExperimentsWorkflow:
 
       results = []
       execution_times = []
+      system_metrics_list = []
       experiment_tasks = [
         self._run_svm_experiment,
         self._run_lstm_experiment,
@@ -74,18 +77,34 @@ class ExperimentsWorkflow:
         self._run_bi_lstm_experiment,
         self._run_bi_lstm_attention_experiment,
       ]
+      
+      data_size = await self._get_data_size(data.input_data_path)
+      
       for exp_func in experiment_tasks:
+        metrics_collector = SystemMetricsCollector(sample_interval=0.1)
+        metrics_collector.start_collection()
+        
         try:
           start_time = time.time()
           result = await exp_func(data)
           end_time = time.time()
           execution_time_minutes = (end_time - start_time) / 60
           execution_times.append(execution_time_minutes)
+          
+          metrics_collector.stop_collection()
+          system_metrics = metrics_collector.get_metrics(data_size)
+          system_metrics_list.append(system_metrics)
+          
         except Exception as e:
           end_time = time.time()
           execution_time_minutes = (end_time - start_time) / 60
           execution_times.append(execution_time_minutes)
           result = e
+          
+          metrics_collector.stop_collection()
+          system_metrics = metrics_collector.get_metrics(data_size)
+          system_metrics_list.append(system_metrics)
+          
         results.append(result)
       
       completed_experiments = []
@@ -101,6 +120,8 @@ class ExperimentsWorkflow:
       ]
       
       for i, result in enumerate(results):
+        system_metrics = system_metrics_list[i] if i < len(system_metrics_list) else None
+        
         if isinstance(result, Exception):
           workflow.logger.error(f"Experimento {experiment_names[i]} falhou: {result}")
           failed_experiments.append(experiment_names[i])
@@ -108,6 +129,7 @@ class ExperimentsWorkflow:
             experiment_name=experiment_names[i],
             status="failed",
             execution_time_minutes=execution_times[i],
+            system_metrics=system_metrics,
             error_message=str(result)
           ))
         else:
@@ -117,15 +139,14 @@ class ExperimentsWorkflow:
             experiment_name=experiment_names[i],
             status="success",
             execution_time_minutes=execution_times[i],
-            metrics=result.metrics
+            metrics=result.metrics,
+            system_metrics=system_metrics
           ))
       
       workflow.logger.info(f"Execução concluída: {len(completed_experiments)} sucessos, {len(failed_experiments)} falhas")
       
-      # Gerar arquivo de especificações da máquina
-      machine_specs_file_path = await self._generate_machine_specs_file(data.input_data_path)
+      await self._generate_machine_specs_file(data.input_data_path, detailed_results)
       
-      # Salvar resultados em arquivo
       results_file_path = await self._save_results_to_file(detailed_results, data.input_data_path)
       
       return ExperimentsWorkflowOut(
@@ -139,6 +160,16 @@ class ExperimentsWorkflow:
     except Exception as e:
       workflow.logger.error(f"Erro ao executar workflow de experimentos: {e}")
       raise e
+
+  async def _get_data_size(self, input_data_path: str) -> int:
+    """Obtém o tamanho dos dados para cálculo de throughput"""
+    try:
+      import pandas as pd
+      df = pd.read_csv(input_data_path)
+      return len(df)
+    except Exception as e:
+      workflow.logger.warning(f"Erro ao obter tamanho dos dados: {e}")
+      return 1
 
   async def _run_svm_experiment(self, data: ExperimentsWorkflowIn):
     """Execute SVM with GloVe and TF-IDF experiment"""
@@ -287,14 +318,12 @@ class ExperimentsWorkflow:
       task_queue=WorflowTaskQueue.ML_TASK_QUEUE.value,
     )
 
-  async def _generate_machine_specs_file(self, input_data_path: str) -> str:
+  async def _generate_machine_specs_file(self, input_data_path: str, detailed_results: List[ExperimentResult] = None) -> str:
     """Generate a file with detailed machine specifications"""
     try:
-      # Criar diretório data se não existir
       data_dir = "data"
       os.makedirs(data_dir, exist_ok=True)
       
-      # Gerar nome do arquivo com timestamp
       timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
       filename = f"machine_specs_{timestamp}.txt"
       filepath = os.path.join(data_dir, filename)
@@ -302,7 +331,6 @@ class ExperimentsWorkflow:
       with open(filepath, 'w', encoding='utf-8') as f:
         f.write("=== ESPECIFICAÇÕES DA MÁQUINA ===\n\n")
         
-        # Informações básicas do sistema
         f.write("SISTEMA OPERACIONAL:\n")
         f.write(f"  Sistema: {platform.system()}\n")
         f.write(f"  Versão: {platform.release()}\n")
@@ -396,6 +424,43 @@ class ExperimentsWorkflow:
         f.write(f"\nEXECUÇÃO:\n")
         f.write(f"  Data/Hora: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
         f.write(f"  Dados de entrada: {input_data_path}\n")
+        
+        # Métricas de performance dos experimentos
+        if detailed_results:
+          f.write(f"\nMÉTRICAS DE PERFORMANCE DOS EXPERIMENTOS:\n")
+          f.write(f"  {'='*60}\n")
+          
+          for result in detailed_results:
+            f.write(f"\n  {result.experiment_name}:\n")
+            f.write(f"    Status: {result.status}\n")
+            f.write(f"    Tempo de execução: {result.execution_time_minutes:.2f} minutos\n")
+            
+            if result.system_metrics:
+              f.write(f"    Memória:\n")
+              f.write(f"      Pico: {result.system_metrics.peak_memory_mb:.2f} MB\n")
+              f.write(f"      Média: {result.system_metrics.average_memory_mb:.2f} MB\n")
+              
+              f.write(f"    CPU:\n")
+              f.write(f"      Pico: {result.system_metrics.peak_cpu_percent:.2f}%\n")
+              f.write(f"      Média: {result.system_metrics.average_cpu_percent:.2f}%\n")
+              
+              f.write(f"    Throughput: {result.system_metrics.throughput_samples_per_second:.2f} amostras/seg\n")
+              f.write(f"    Latência média: {result.system_metrics.average_latency_ms:.2f} ms\n")
+              
+              f.write(f"    Tempos por etapa:\n")
+              f.write(f"      Carregamento de dados: {result.system_metrics.data_loading_time_ms:.2f} ms\n")
+              f.write(f"      Treinamento do modelo: {result.system_metrics.model_training_time_ms:.2f} ms\n")
+              f.write(f"      Avaliação do modelo: {result.system_metrics.model_evaluation_time_ms:.2f} ms\n")
+              
+              f.write(f"    Eficiências:\n")
+              f.write(f"      Memória: {result.system_metrics.memory_efficiency:.4f}\n")
+              f.write(f"      CPU: {result.system_metrics.cpu_efficiency:.4f}\n")
+              f.write(f"      Energia: {result.system_metrics.energy_efficiency_score:.2f}/100\n")
+            else:
+              f.write(f"    Métricas do sistema: Não disponíveis\n")
+            
+            if result.error_message:
+              f.write(f"    Erro: {result.error_message}\n")
       
       workflow.logger.info(f"Especificações da máquina salvas em: {filepath}")
       return filepath
@@ -407,23 +472,24 @@ class ExperimentsWorkflow:
   async def _save_results_to_file(self, detailed_results: List[ExperimentResult], input_data_path: str) -> str:
     """Save experiment results to CSV file in data directory"""
     try:
-      # Criar diretório data se não existir
       data_dir = "data"
       os.makedirs(data_dir, exist_ok=True)
       
-      # Gerar nome do arquivo com timestamp
       timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
       filename = f"experiment_results_{timestamp}.csv"
       filepath = os.path.join(data_dir, filename)
       
-      # Preparar dados para o DataFrame
       results_data = []
       for result in detailed_results:
+        base_data = {
+          "experiment_name": result.experiment_name,
+          "status": result.status,
+          "execution_time_minutes": result.execution_time_minutes,
+          "error_message": result.error_message
+        }
+
         if result.status == "success" and result.metrics:
-          results_data.append({
-            "experiment_name": result.experiment_name,
-            "status": result.status,
-            "execution_time_minutes": result.execution_time_minutes,
+          base_data.update({
             "true_positives": result.metrics["true_positives"],
             "false_positives": result.metrics["false_positives"],
             "true_negatives": result.metrics["true_negatives"],
@@ -434,13 +500,9 @@ class ExperimentsWorkflow:
             "recall": result.metrics["recall"],
             "f2_score": result.metrics["f2_score"],
             "wss95": result.metrics["wss95"],
-            "error_message": None
           })
         else:
-          results_data.append({
-            "experiment_name": result.experiment_name,
-            "status": result.status,
-            "execution_time_minutes": result.execution_time_minutes,
+          base_data.update({
             "true_positives": None,
             "false_positives": None,
             "true_negatives": None,
@@ -451,10 +513,43 @@ class ExperimentsWorkflow:
             "recall": None,
             "f2_score": None,
             "wss95": None,
-            "error_message": result.error_message
           })
-      
-      # Criar DataFrame e salvar
+        
+        if result.system_metrics:
+          base_data.update({
+            "peak_memory_mb": result.system_metrics.peak_memory_mb,
+            "average_memory_mb": result.system_metrics.average_memory_mb,
+            "peak_cpu_percent": result.system_metrics.peak_cpu_percent,
+            "average_cpu_percent": result.system_metrics.average_cpu_percent,
+            "throughput_samples_per_second": result.system_metrics.throughput_samples_per_second,
+            "average_latency_ms": result.system_metrics.average_latency_ms,
+            "data_loading_time_ms": result.system_metrics.data_loading_time_ms,
+            "model_training_time_ms": result.system_metrics.model_training_time_ms,
+            "model_evaluation_time_ms": result.system_metrics.model_evaluation_time_ms,
+            "total_execution_time_ms": result.system_metrics.total_execution_time_ms,
+            "memory_efficiency": result.system_metrics.memory_efficiency,
+            "cpu_efficiency": result.system_metrics.cpu_efficiency,
+            "energy_efficiency_score": result.system_metrics.energy_efficiency_score,
+          })
+        else:
+          base_data.update({
+            "peak_memory_mb": None,
+            "average_memory_mb": None,
+            "peak_cpu_percent": None,
+            "average_cpu_percent": None,
+            "throughput_samples_per_second": None,
+            "average_latency_ms": None,
+            "data_loading_time_ms": None,
+            "model_training_time_ms": None,
+            "model_evaluation_time_ms": None,
+            "total_execution_time_ms": None,
+            "memory_efficiency": None,
+            "cpu_efficiency": None,
+            "energy_efficiency_score": None,
+          })
+        
+        results_data.append(base_data)
+
       df = pd.DataFrame(results_data)
       df.to_csv(filepath, index=False)
       
