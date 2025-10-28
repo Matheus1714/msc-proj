@@ -1,35 +1,5 @@
 from enum import Enum
 
-# SOURCE_INPUT_FILES = [
-#   ("UrinaryIncontinence.csv", "https://drive.google.com/uc?id=1CQXJvSpA7KVeGImypLSBPerPlzd-7Osp"),
-#   ("Hall_2012.csv", "https://drive.google.com/uc?id=1HUc4UxTQ3_4SaPz2FvXUkuB49Y5YNB1p"),
-#   ("ProtonPumpInhibitors.csv", "https://drive.google.com/uc?id=1t8MsIwLdjF3LsrFRjy00tvU52gVsG4ld"),
-#   ("van_de_Schoot_2017.csv", "https://drive.google.com/uc?id=1BFQTrOg-FjTK5gtw-1pUBpqFvrLRJoij"),
-#   ("SkeletalMuscleRelaxants.csv", "https://drive.google.com/uc?id=1LXOdKDGWG7ZE_nsGJFn0VfKOkp-3yuBu"),
-#   ("Kwok_2020.csv", "https://drive.google.com/uc?id=1cnZoP28syi7N9bLeerk8f234C4E53KqE"),
-#   ("Nagtegaal_2019.csv", "https://drive.google.com/uc?id=1P5hMvAiYomEwp2TY9TPOb2B8Ih9dX6Qc"),
-#   ("Wolters_2018.csv", "https://drive.google.com/uc?id=1f75DjbnWYiJJAumzOWNCFTd9oLZjb68S"),
-#   ("Kitchenham_2010.csv", "https://drive.google.com/uc?id=1A5Y1Nu3udcsqHUN6jOeVBKXjtSeyaQVb"),
-#   ("Radjenovic_2013.csv", "https://drive.google.com/uc?id=14J4yjyjy0u4rvNyRZ7nUxOPWU0dtUm86"),
-#   ("Triptans.csv", "https://drive.google.com/uc?id=1wDQzkzP4z6p8IT5egxszJZQmtuHJ-MJD"),
-#   ("Wahono_2015.csv", "https://drive.google.com/uc?id=1t72QNc3_miWsS_ht2Kxc40PnE9Lp9ZqC"),
-#   ("Statins.csv", "https://drive.google.com/uc?id=1mLg5o9M1HDcjyOpZUXxs2EF0OWvDuov-"),
-#   ("van_Dis_2020.csv", "https://drive.google.com/uc?id=1JTCX0gQ2KIwnKfud_7LOV11NkaqzmJHo"),
-#   ("ADHD.csv", "https://drive.google.com/uc?id=1FMGWV80MI1Pq8_a_GuIxO_5xZrw71ajm"),
-#   ("ACEInhibitors.csv", "https://drive.google.com/uc?id=1X7S4JT7wx-D7vxwmgBRWowyZ-PJoDmkv"),
-#   ("Opiods.csv", "https://drive.google.com/uc?id=1xf-HecsXREPHwFr-dClt3nk2G7yqyxms"),
-#   ("AtypicalAntipsychotics.csv", "https://drive.google.com/uc?id=1qgguRWxDqqEk3Go3wahopei0RSvMkt6q"),
-#   ("CalciumChannelBlockers.csv", "https://drive.google.com/uc?id=1EmT3H3emE9KlCAaYkMEd-F71vgQbBy0q"),
-#   ("BetaBlockers.csv", "https://drive.google.com/uc?id=1h7gRtBf6YqIlwu4dYVCNbZgQWl3s7Zvm"),
-#   ("NSAIDS.csv", "https://drive.google.com/uc?id=137mglPeSXUr5wVkzO3QmzKWVsgz0B9Iq"),
-#   ("Bannach-Brown_2019.csv", "https://drive.google.com/uc?id=1Xid0OTXSycHRTR7CzpZ2BYjScBrttPQS"),
-#   ("Appenzeller-Herzog_2020.csv", "https://drive.google.com/uc?id=1sPxDAQtmfB3nOjeJWwsyLxcFQrbYs3R3"),
-#   ("OralHypoglycemics.csv", "https://drive.google.com/uc?id=188Yb5svRlphVuVwUudKWq3TsryWdJ2Cp"),
-#   ("Antihistamines.csv", "https://drive.google.com/uc?id=1FSa6URUSiqbzuDq6cwVOK5IwdCauQkXF"),
-#   ("Bos_2018.csv", "https://drive.google.com/uc?id=1H5yBNB_BtuHtxgcDLI7q1YfMiGwAxu-I"),
-#   ("Estrogens.csv", "https://drive.google.com/uc?id=1ASCDXZ1yP0GTaQYdbBvWRxmFdXNw-O1f"),
-# ]
-
 SOURCE_INPUT_FILES = [
   ("UrinaryIncontinence.csv", "/Users/matheusmota/src/github/msc/systematic-review-datasets/datasets/Cohen_2006/output/local/UrinaryIncontinence.csv"),
   ("Hall_2012.csv", "/Users/matheusmota/src/github/msc/systematic-review-datasets/datasets/Hall_Wahono_Radjenovic_Kitchenham/output/Hall_2012.csv"),
@@ -61,3 +31,40 @@ SOURCE_INPUT_FILES = [
 ]
 class WorflowTaskQueue(Enum):
   ML_TASK_QUEUE = "ml-task-queue"
+
+class ExperimentType(Enum):
+  SVM_WITH_SGD_AND_TF_IDF = "svm_with_sgd_and_tf_idf"
+  BI_LSTM_WITH_GLOVE = "bi_lstm_with_glove"
+  BI_LSTM_WITH_GLOVE_AND_ATTENTION = "bi_lstm_with_glove_and_attention"
+  LSTM_WITH_GLOVE = "lstm_with_glove"
+  LSTM_WITH_GLOVE_AND_ATTENTION = "lstm_with_glove_and_attention"
+
+
+GLOVE_6B_300D_FILE_PATH = "data/word_vectors/glove/glove.6B.300d.txt"
+GLOVE_EMBEDDINGS_PATH = "data/glove_embeddings.npy"
+TOKENIZED_DATA_PATH = "data/tokenized_data.csv"
+WORD_INDEX_PATH = "data/word_index.json"
+
+X_SEQ_PATH = "data/x_seq.npy"
+Y_PATH = "data/y.npy"
+
+X_TRAIN_PATH = "data/x_train.npy"
+X_VAL_PATH = "data/x_val.npy"
+X_TEST_PATH = "data/x_test.npy"
+Y_TRAIN_PATH = "data/y_train.npy"
+Y_VAL_PATH = "data/y_val.npy"
+Y_TEST_PATH = "data/y_test.npy"
+
+PREPARED_DATA_PATH = "data/prepared_data.csv"
+
+
+# ExperimentSVMWithSGDAndTFIDF
+
+# ExperimentBiLSTMWithGlove
+
+# ExperimentBiLSTMWithGloveAndAttention
+
+# ExperimentLSTMWithGlove
+
+# ExperimentLSTMWithGloveAndAttention
+
