@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from temporalio import workflow
+from temporalio.common import RetryPolicy
 from typing import List, Dict, Any
 import pandas as pd
 import os
@@ -39,6 +40,11 @@ from src.activities.generate_machine_specs_activity import (
   GenerateMachineSpecsIn,
   GenerateMachineSpecsOut,
 )
+from src.activities.download_glove_vectors_activity import (
+  download_glove_vectors_activity,
+  DownloadGloveVectorsIn,
+  DownloadGloveVectorsOut,
+)
 
 @dataclass
 class ExperimentsWorkflowIn:
@@ -69,6 +75,31 @@ class ExperimentsWorkflow:
   async def run(self, data: ExperimentsWorkflowIn) -> ExperimentsWorkflowOut:
     try:
       workflow.logger.info(f"Iniciando execução de todos os experimentos com dados de: {data.input_data_path}")
+
+      embedding_dim = data.hyperparameters.get("embedding_dim", 300)
+      glove_target_dir = "data/word_vectors/glove"
+      
+      workflow.logger.info(f"Verificando/downloadando GloVe vectors ({embedding_dim}d)...")
+      glove_result: DownloadGloveVectorsOut = await workflow.execute_activity(
+        download_glove_vectors_activity,
+        arg=DownloadGloveVectorsIn(
+          target_dir=glove_target_dir,
+          embedding_dim=embedding_dim,
+        ),
+        start_to_close_timeout=timedelta(minutes=30),
+        retry_policy=RetryPolicy(
+          initial_interval=timedelta(seconds=5),
+          maximum_interval=timedelta(minutes=2),
+          maximum_attempts=3,
+          backoff_coefficient=2.0,
+        ),
+        task_queue=WorflowTaskQueue.ML_TASK_QUEUE.value,
+      )
+      
+      if not glove_result.success:
+        raise Exception(f"Failed to download GloVe vectors: {glove_result.message}")
+      
+      workflow.logger.info(f"GloVe vectors ready: {glove_result.glove_file_path}")
 
       results = []
       execution_times = []

@@ -14,6 +14,7 @@ from src.activities.prepare_data_for_experiment_activity import prepare_data_for
 from src.activities.tokenizer_activity import tokenizer_activity
 from src.activities.split_data_activity import split_data_activity
 from src.activities.generate_machine_specs_activity import generate_machine_specs_activity
+from src.activities.download_glove_vectors_activity import download_glove_vectors_activity
 
 # Experiments Workflows
 
@@ -22,6 +23,7 @@ from src.workflows.experiment_lstm_with_glove_workflow import ExperimentLSTMWith
 from src.workflows.experiment_lstm_with_glove_and_attention_workflow import ExperimentLSTMWithGloveAndAttentionWorkflow
 from src.workflows.experiment_bi_lstm_with_glove_workflow import ExperimentBiLSTMWithGloveWorkflow
 from src.workflows.experiment_bi_lstm_with_glove_and_attention_workflow import ExperimentBiLSTMWithGloveAndAttentionWorkflow
+from src.workflows.download_glove_vectors_workflow import DownloadGloveVectorsWorkflow
 
 # Experiments Activities
 
@@ -42,6 +44,7 @@ ml_worker = {
         ExperimentBiLSTMWithGloveWorkflow,
         ExperimentBiLSTMWithGloveAndAttentionWorkflow,
         ExperimentsWorkflow,
+        DownloadGloveVectorsWorkflow,
     ],
     "activities": [
         run_experiment_svm_with_glove_and_tfidf_activity,
@@ -56,6 +59,7 @@ ml_worker = {
         tokenizer_activity,
         split_data_activity,
         generate_machine_specs_activity,
+        download_glove_vectors_activity,
     ],
     "workflow_runner": UnsandboxedWorkflowRunner(),
     "task_queue": WorflowTaskQueue.ML_TASK_QUEUE.value,
