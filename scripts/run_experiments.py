@@ -17,10 +17,15 @@ from temporalio.client import Client
 #   ExperimentLSTMWithGloveWorkflowIn,
 #   ExperimentLSTMWithGloveHyperparameters,
 # )
-from src.workflows.experiment_lstm_with_glove_and_attention_workflow import (
-  ExperimentLSTMWithGloveAndAttentionWorkflow,
-  ExperimentLSTMWithGloveAndAttentionWorkflowIn,
-  ExperimentLSTMWithGloveAndAttentionHyperparameters,
+# from src.workflows.experiment_lstm_with_glove_and_attention_workflow import (
+#   ExperimentLSTMWithGloveAndAttentionWorkflow,
+#   ExperimentLSTMWithGloveAndAttentionWorkflowIn,
+#   ExperimentLSTMWithGloveAndAttentionHyperparameters,
+# )
+from src.workflows.experiment_bi_lstm_with_glove_workflow import (
+  ExperimentBiLSTMWithGloveWorkflow,
+  ExperimentBiLSTMWithGloveWorkflowIn,
+  ExperimentBiLSTMWithGloveHyperparameters,
 )
 from constants import WorflowTaskQueue
 
@@ -77,11 +82,41 @@ async def main():
     #   task_queue=WorflowTaskQueue.ML_TASK_QUEUE.value,
     # )
 
+    # await client.start_workflow(
+    #   ExperimentLSTMWithGloveAndAttentionWorkflow.run,
+    #   arg=ExperimentLSTMWithGloveAndAttentionWorkflowIn(
+    #     input_data_path=f"data/academic_works.csv",
+    #     hyperparameters=ExperimentLSTMWithGloveAndAttentionHyperparameters(
+    #       max_words=20000,
+    #       max_len=300,
+    #       embedding_dim=300,
+    #       random_state=42,
+    #       lstm_units=100,
+    #       lstm_dropout=0.2,
+    #       lstm_recurrent_dropout=0.2,
+    #       pool_dropout=0.5,
+    #       dense_units=1,
+    #       dense_activation="sigmoid",
+    #       batch_size=64,
+    #       epochs=5,
+    #       learning_rate=3e-4,
+    #       loss="binary_crossentropy",
+    #       metrics=["accuracy"],
+    #       n_splits=5,
+    #       verbose=0,
+    #       class_weight_0=1,
+    #       class_weight_1=44,
+    #     ),
+    #   ),
+    #   id=f"experiment-lstm-with-glove-and-attention-workflow-{uuid4()}",
+    #   task_queue=WorflowTaskQueue.ML_TASK_QUEUE.value,
+    # )
+
     await client.start_workflow(
-      ExperimentLSTMWithGloveAndAttentionWorkflow.run,
-      arg=ExperimentLSTMWithGloveAndAttentionWorkflowIn(
+      ExperimentBiLSTMWithGloveWorkflow.run,
+      arg=ExperimentBiLSTMWithGloveWorkflowIn(
         input_data_path=f"data/academic_works.csv",
-        hyperparameters=ExperimentLSTMWithGloveAndAttentionHyperparameters(
+        hyperparameters=ExperimentBiLSTMWithGloveHyperparameters(
           max_words=20000,
           max_len=300,
           embedding_dim=300,
@@ -89,12 +124,12 @@ async def main():
           lstm_units=100,
           lstm_dropout=0.2,
           lstm_recurrent_dropout=0.2,
-          pool_dropout=0.5,
+          pool_dropout=0.02,
           dense_units=1,
           dense_activation="sigmoid",
           batch_size=64,
           epochs=5,
-          learning_rate=3e-4,
+          learning_rate=1e-4,
           loss="binary_crossentropy",
           metrics=["accuracy"],
           n_splits=5,
@@ -103,7 +138,7 @@ async def main():
           class_weight_1=44,
         ),
       ),
-      id=f"experiment-lstm-with-glove-and-attention-workflow-{uuid4()}",
+      id=f"experiment-bi-lstm-with-glove-workflow-{uuid4()}",
       task_queue=WorflowTaskQueue.ML_TASK_QUEUE.value,
     )
 
