@@ -7,8 +7,9 @@ from dataclasses import dataclass
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import SGDClassifier
-from sklearn.metrics import precision_recall_curve, confusion_matrix
 from sklearn.model_selection import StratifiedKFold, cross_val_predict
+
+from src.utils.calculate_metrics import calculate_metrics, EvaluationData
 
 @dataclass
 class RunExperimentSVMWithGloveAndTFIDFIn:
@@ -20,7 +21,7 @@ class RunExperimentSVMWithGloveAndTFIDFIn:
 
 @dataclass
 class RunExperimentSVMWithGloveAndTFIDFOut:
-  ...
+  metrics: EvaluationData
 
 @activity.defn
 async def run_experiment_svm_with_glove_and_tfidf_activity(data: RunExperimentSVMWithGloveAndTFIDFIn) -> RunExperimentSVMWithGloveAndTFIDFOut:
@@ -33,19 +34,6 @@ async def run_experiment_svm_with_glove_and_tfidf_activity(data: RunExperimentSV
   clf = SGDClassifier(loss='hinge', penalty='l2', max_iter=data.max_iter, random_state=data.random_state)
   y_scores = cross_val_predict(clf, X_tfidf, y, cv=cv, method='decision_function')
 
-  y_true_scores = y
+  metrics = calculate_metrics(y, y_scores)
 
-  prec, rec, thresh = precision_recall_curve(y_true_scores, y_scores)
-
-  best_thresh = next((t for p, r, t in zip(prec, rec, thresh) if r >= 0.95), 0.5)
-
-  y_pred = (y_scores >= best_thresh).astype(int)
-  tn, fp, fn, tp = confusion_matrix(y_true_scores, y_pred).ravel()
-
-  N = tn + fp
-  P = tp / (tp + fp) if (tp + fp) else 0
-  R = tp / (tp + fn) if (tp + fn) else 0
-  F2 = (5 * P * R) / (4 * P + R) if (P + R) else 0
-  WSS95 = (N - fp)/N - (1-0.95) if N else 0
-
-  return RunExperimentSVMWithGloveAndTFIDFOut()
+  return RunExperimentSVMWithGloveAndTFIDFOut(metrics=metrics)
