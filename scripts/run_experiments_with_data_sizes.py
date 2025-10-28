@@ -48,19 +48,20 @@ def create_data_subsets(input_file_path: str, output_dir: str, max_rows: int = 2
     
     return data_subsets
 
-async def start_experiments_for_data_size(client, data_path, data_size_info, hyperparameters, base_experiment_config):
+async def start_experiments_for_data_size(client, data_path, data_size_info, hyperparameters):
     pct, filepath, num_rows = data_size_info
     
     print(f"🚀 Iniciando experimentos para {pct}% dos dados ({num_rows} linhas)")
     print(f"📁 Arquivo: {filepath}")
     
     experiment_config = ExperimentConfig.create()
-    experiment_config.base_dir = f"{base_experiment_config.base_dir}_size_{pct}pct"
     experiment_config.create_directories()
     
+    print(f"📂 Diretório do experimento: {experiment_config.base_dir}")
+    
     try:
-        # Iniciar workflow sem aguardar conclusão
-        workflow_handle = await client.start_workflow(
+        # Executar workflow e aguardar conclusão
+        result = await client.execute_workflow(
             ExperimentsWorkflow.run,
             arg=ExperimentsWorkflowIn(
                 input_data_path=filepath,
@@ -71,19 +72,20 @@ async def start_experiments_for_data_size(client, data_path, data_size_info, hyp
             task_queue=WorflowTaskQueue.ML_TASK_QUEUE.value,
         )
         
-        print(f"✅ Workflow iniciado para {pct}% - ID: {workflow_handle.id}")
+        print(f"✅ Workflow concluído para {pct}% - ID: {result}")
         
         return {
             'data_size_info': data_size_info,
-            'workflow_handle': workflow_handle,
+            'workflow_result': result,
+            'experiment_config': experiment_config,
             'success': True
         }
         
     except Exception as e:
-        print(f"❌ Erro ao iniciar workflow para {pct}%: {e}")
+        print(f"❌ Erro ao executar workflow para {pct}%: {e}")
         return {
             'data_size_info': data_size_info,
-            'workflow_handle': None,
+            'workflow_result': None,
             'success': False,
             'error': str(e)
         }
@@ -93,11 +95,6 @@ async def main():
     
     try:
         client = await Client.connect(os.environ.get("TEMPORAL_CONNECT"))
-        
-        base_experiment_config = ExperimentConfig.create()
-        base_experiment_config.create_directories()
-        
-        print(f"📁 Diretório base dos experimentos: {base_experiment_config.base_dir}")
         
         hyperparameters = {
             "max_words": 20000,
@@ -139,8 +136,7 @@ async def main():
                 client, 
                 data_size_info[1],  # filepath
                 data_size_info, 
-                hyperparameters, 
-                base_experiment_config
+                hyperparameters
             )
             all_workflows.append(result)
         
@@ -156,21 +152,35 @@ async def main():
             
             if result['success']:
                 successful_starts += 1
-                workflow_handle = result['workflow_handle']
+                workflow_result = result['workflow_result']
+                experiment_config = result['experiment_config']
                 print(f"\n✅ {pct}% ({num_rows} linhas):")
-                print(f"   - Workflow ID: {workflow_handle.id}")
-                print(f"   - Status: INICIADO")
+                print(f"   - Status: CONCLUÍDO")
                 print(f"   - Arquivo: {filepath}")
+                print(f"   - Diretório: {experiment_config.base_dir}")
+                print(f"   - Experimentos concluídos: {len(workflow_result.completed_experiments)}")
+                print(f"   - Experimentos falharam: {len(workflow_result.failed_experiments)}")
             else:
                 failed_starts += 1
-                print(f"\n❌ {pct}% ({num_rows} linhas): FALHOU AO INICIAR")
+                print(f"\n❌ {pct}% ({num_rows} linhas): FALHOU AO EXECUTAR")
                 print(f"   - Erro: {result['error']}")
         
-        print(f"\n🎉 Total de workflows iniciados: {len(all_workflows)}")
-        print(f"✅ Iniciados com sucesso: {successful_starts}")
-        print(f"❌ Falhas ao iniciar: {failed_starts}")
+        print(f"\n🎉 Total de workflows executados: {len(all_workflows)}")
+        print(f"✅ Executados com sucesso: {successful_starts}")
+        print(f"❌ Falhas ao executar: {failed_starts}")
         
-        workflows_info_file = os.path.join(base_experiment_config.base_dir, "started_workflows_info.txt")
+        # Usar o diretório do primeiro experimento bem-sucedido ou criar um diretório temporário
+        info_dir = None
+        for result in all_workflows:
+            if result['success'] and 'experiment_config' in result:
+                info_dir = result['experiment_config'].base_dir
+                break
+        
+        if not info_dir:
+            info_dir = "data/experiments"
+            os.makedirs(info_dir, exist_ok=True)
+        
+        workflows_info_file = os.path.join(info_dir, "started_workflows_info.txt")
         with open(workflows_info_file, 'w') as f:
             f.write("INFORMAÇÕES DOS WORKFLOWS INICIADOS\n")
             f.write("="*50 + "\n\n")
@@ -185,19 +195,22 @@ async def main():
                 f.write(f"Arquivo: {filepath}\n")
                 
                 if result['success']:
-                    workflow_handle = result['workflow_handle']
-                    f.write(f"Status: INICIADO\n")
-                    f.write(f"Workflow ID: {workflow_handle.id}\n")
+                    workflow_result = result['workflow_result']
+                    experiment_config = result['experiment_config']
+                    f.write(f"Status: CONCLUÍDO\n")
+                    f.write(f"Diretório: {experiment_config.base_dir}\n")
+                    f.write(f"Experimentos concluídos: {len(workflow_result.completed_experiments)}\n")
+                    f.write(f"Experimentos falharam: {len(workflow_result.failed_experiments)}\n")
                     f.write(f"Task Queue: {WorflowTaskQueue.ML_TASK_QUEUE.value}\n")
                 else:
-                    f.write(f"Status: FALHOU AO INICIAR\n")
+                    f.write(f"Status: FALHOU AO EXECUTAR\n")
                     f.write(f"Erro: {result['error']}\n")
                 
                 f.write("-" * 30 + "\n")
         
         print(f"\n📄 Informações dos workflows salvos em: {workflows_info_file}")
-        print("\n🚀 Todos os workflows foram iniciados e estão executando em paralelo!")
-        print("💡 Use o Temporal Web UI ou CLI para monitorar o progresso dos workflows.")
+        print("\n🚀 Todos os workflows foram executados sequencialmente!")
+        print("💡 Cada pasta de experimento contém os resultados intermediários e finais.")
 
     except Exception as e:
         print(f"❌ Erro ao executar workflow: {e}")
