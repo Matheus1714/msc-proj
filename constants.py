@@ -56,10 +56,3 @@ Y_VAL_PATH = "data/y_val.npy"
 Y_TEST_PATH = "data/y_test.npy"
 
 PREPARED_DATA_PATH = "data/prepared_data.csv"
-
-
-# ExperimentBiLSTMWithGlove
-
-# ExperimentBiLSTMWithGloveAndAttention
-
-
