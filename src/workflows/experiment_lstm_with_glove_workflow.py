@@ -138,7 +138,7 @@ class ExperimentLSTMWithGloveWorkflow:
         class_weight_0=data.hyperparameters["class_weight_0"],
         class_weight_1=data.hyperparameters["class_weight_1"],
       ),
-      start_to_close_timeout=timedelta(minutes=5),
+      start_to_close_timeout=timedelta(days=100),
       task_queue=WorflowTaskQueue.ML_TASK_QUEUE.value,
     )
 

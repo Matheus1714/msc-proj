@@ -15,7 +15,6 @@ from src.activities.prepare_data_for_experiment_activity import (
 from src.activities.run_experiment_svm_with_glove_and_tfidf_activity import (
   run_experiment_svm_with_glove_and_tfidf_activity,
   RunExperimentSVMWithGloveAndTFIDFIn,
-  RunExperimentSVMWithGloveAndTFIDFOut,
 )
 from src.activities.tokenizer_activity import (
   tokenizer_activity,
@@ -99,7 +98,7 @@ class ExperimentSVMWithGloveAndTFIDFWorkflow:
       task_queue=WorflowTaskQueue.ML_TASK_QUEUE.value,
     )
 
-    experiment: RunExperimentSVMWithGloveAndTFIDFOut = await workflow.execute_activity(
+    await workflow.execute_activity(
       run_experiment_svm_with_glove_and_tfidf_activity,
       arg=RunExperimentSVMWithGloveAndTFIDFIn(
         input_data_path=prepare_data_for_experiment_result.output_data_path,
@@ -108,7 +107,7 @@ class ExperimentSVMWithGloveAndTFIDFWorkflow:
         max_iter=data.hyperparameters["max_iter"],
         ngram_range=data.hyperparameters["ngram_range"],
       ),
-      start_to_close_timeout=timedelta(minutes=5),
+      start_to_close_timeout=timedelta(days=100),
       task_queue=WorflowTaskQueue.ML_TASK_QUEUE.value,
     )
 
