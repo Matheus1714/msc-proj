@@ -7,8 +7,10 @@ from utils import setup_project_path
 setup_project_path()
 
 from temporalio.client import Client
-from src.workflows.data_preprocessing_workflow import DataPreprocessingWorkflow
-from src.default_types import DataPreprocessingWorkflowIn
+from src.workflows.data_preprocessing_workflow import (
+    DataPreprocessingWorkflow,
+    DataPreprocessingWorkflowIn,
+)
 from constants import WorflowTaskQueue
 
 async def main():    
