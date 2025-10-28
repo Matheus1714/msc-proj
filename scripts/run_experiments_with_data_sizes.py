@@ -23,28 +23,63 @@ def create_data_subsets(input_file_path: str, output_dir: str, max_rows: int = 2
     print(f"📊 Arquivo original: {total_rows} linhas")
     print(f"🔒 Limitando a {max_rows} linhas para teste")
     
+    class_counts = df['included'].value_counts()
+    print(f"📈 Distribuição de classes: {dict(class_counts)}")
+    
     percentages = [10, 25, 50, 75, 100]  # 10%, 25%, 50%, 75%, 100%
     
     data_subsets = []
     
     for pct in percentages:
         target_rows = int((pct / 100) * total_rows)
-        
         actual_rows = min(target_rows, max_rows)
         
-        if actual_rows < 10:
+        if actual_rows < 20:  # Increased minimum from 10 to 20
             print(f"⚠️  Pulando {pct}% - muito poucas linhas ({actual_rows})")
             continue
         
-        subset_df = df.sample(n=actual_rows, random_state=42)
-        
-        filename = f"academic_works_{pct}pct_{actual_rows}rows.csv"
-        filepath = os.path.join(output_dir, filename)
-        
-        subset_df.to_csv(filepath, index=False)
-        
-        data_subsets.append((pct, filepath, actual_rows))
-        print(f"✅ {pct}%: {actual_rows} linhas -> {filename}")
+        # Sample with stratification to maintain class balance
+        try:
+            # Calculate how many samples to take from each class proportionally
+            class_0_count = int(actual_rows * class_counts[0] / total_rows)
+            class_1_count = int(actual_rows * class_counts[1] / total_rows)
+            
+            # Ensure we have at least 2 samples per class
+            class_0_count = max(class_0_count, 2)
+            class_1_count = max(class_1_count, 2)
+            
+            # Sample from each class
+            class_0_samples = df[df['included'] == 0].sample(n=min(class_0_count, class_counts[0]), random_state=42)
+            class_1_samples = df[df['included'] == 1].sample(n=min(class_1_count, class_counts[1]), random_state=42)
+            
+            subset_df = pd.concat([class_0_samples, class_1_samples], ignore_index=True)
+            
+            # If we still don't have enough samples, add more from the majority class
+            if len(subset_df) < actual_rows * 0.8:
+                remaining_needed = actual_rows - len(subset_df)
+                additional_samples = df[df['included'] == 0].sample(n=min(remaining_needed, class_counts[0] - len(class_0_samples)), random_state=42)
+                subset_df = pd.concat([subset_df, additional_samples], ignore_index=True)
+            
+            # Check if we have at least 2 samples per class
+            subset_class_counts = subset_df['included'].value_counts()
+            min_class_count = subset_class_counts.min()
+            
+            if min_class_count < 2:
+                print(f"⚠️  Pulando {pct}% - classe minoritária tem apenas {min_class_count} amostra(s)")
+                continue
+            
+            filename = f"academic_works_{pct}pct_{len(subset_df)}rows.csv"
+            filepath = os.path.join(output_dir, filename)
+            
+            subset_df.to_csv(filepath, index=False)
+            
+            data_subsets.append((pct, filepath, len(subset_df)))
+            print(f"✅ {pct}%: {len(subset_df)} linhas -> {filename}")
+            print(f"   📊 Classes: {dict(subset_class_counts)}")
+            
+        except Exception as e:
+            print(f"⚠️  Erro ao criar {pct}%: {e}")
+            continue
     
     return data_subsets
 
