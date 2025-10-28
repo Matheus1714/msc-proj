@@ -20,6 +20,8 @@ class LoadGloveEmbeddingsOut:
 
 @activity.defn
 async def load_glove_embeddings_activity(data: LoadGloveEmbeddingsIn) -> LoadGloveEmbeddingsOut:
+    os.makedirs(os.path.dirname(data.output_path), exist_ok=True)
+    
     embedding_matrix_path = data.output_path
 
     if os.path.exists(embedding_matrix_path) and os.path.exists(data.word_index_path):

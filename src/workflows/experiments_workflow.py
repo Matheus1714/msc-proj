@@ -4,10 +4,7 @@ from typing import List, Dict, Any
 import pandas as pd
 import os
 import time
-import platform
-import psutil
-import subprocess
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from src.workflows.experiment_svm_with_glove_and_tfidf_workflow import (
   ExperimentSVMWithGloveAndTFIDFWorkflow,
@@ -34,14 +31,20 @@ from src.workflows.experiment_bi_lstm_with_glove_and_attention_workflow import (
   ExperimentBiLSTMWithGloveAndAttentionWorkflowIn,
   ExperimentBiLSTMWithGloveAndAttentionHyperparameters,
 )
-from constants import WorflowTaskQueue
+from constants import WorflowTaskQueue, ExperimentConfig
 from src.utils.calculate_metrics import EvaluationData
 from src.utils.system_metrics import SystemMetrics, SystemMetricsCollector
+from src.activities.generate_machine_specs_activity import (
+  generate_machine_specs_activity,
+  GenerateMachineSpecsIn,
+  GenerateMachineSpecsOut,
+)
 
 @dataclass
 class ExperimentsWorkflowIn:
   input_data_path: str
   hyperparameters: Dict[str, Any]
+  experiment_config: ExperimentConfig
 
 @dataclass
 class ExperimentResult:
@@ -145,9 +148,47 @@ class ExperimentsWorkflow:
       
       workflow.logger.info(f"Execução concluída: {len(completed_experiments)} sucessos, {len(failed_experiments)} falhas")
       
-      await self._generate_machine_specs_file(data.input_data_path, detailed_results)
+      # Converter detailed_results para formato serializável
+      serializable_results = []
+      for result in detailed_results:
+        result_dict = {
+          "experiment_name": result.experiment_name,
+          "status": result.status,
+          "execution_time_minutes": result.execution_time_minutes,
+          "error_message": result.error_message
+        }
+        
+        if result.system_metrics:
+          result_dict["system_metrics"] = {
+            "peak_memory_mb": result.system_metrics.peak_memory_mb,
+            "average_memory_mb": result.system_metrics.average_memory_mb,
+            "peak_cpu_percent": result.system_metrics.peak_cpu_percent,
+            "average_cpu_percent": result.system_metrics.average_cpu_percent,
+            "throughput_samples_per_second": result.system_metrics.throughput_samples_per_second,
+            "average_latency_ms": result.system_metrics.average_latency_ms,
+            "data_loading_time_ms": result.system_metrics.data_loading_time_ms,
+            "model_training_time_ms": result.system_metrics.model_training_time_ms,
+            "model_evaluation_time_ms": result.system_metrics.model_evaluation_time_ms,
+            "memory_efficiency": result.system_metrics.memory_efficiency,
+            "cpu_efficiency": result.system_metrics.cpu_efficiency,
+            "energy_efficiency_score": result.system_metrics.energy_efficiency_score,
+          }
+        
+        serializable_results.append(result_dict)
       
-      results_file_path = await self._save_results_to_file(detailed_results, data.input_data_path)
+      # Gerar arquivo de especificações da máquina
+      machine_specs_result: GenerateMachineSpecsOut = await workflow.execute_activity(
+        generate_machine_specs_activity,
+        arg=GenerateMachineSpecsIn(
+          input_data_path=data.input_data_path,
+          machine_specs_file_path=data.experiment_config.machine_specs_file_path,
+          detailed_results=serializable_results,
+        ),
+        start_to_close_timeout=timedelta(minutes=5),
+        task_queue=WorflowTaskQueue.ML_TASK_QUEUE.value,
+      )
+      
+      results_file_path = await self._save_results_to_file(detailed_results, data.input_data_path, data.experiment_config)
       
       return ExperimentsWorkflowOut(
         completed_experiments=completed_experiments,
@@ -164,6 +205,9 @@ class ExperimentsWorkflow:
   async def _get_data_size(self, input_data_path: str) -> int:
     """Obtém o tamanho dos dados para cálculo de throughput"""
     try:
+      # Ceder controle antes de operação pesada
+      await workflow.sleep(0.1)
+      
       import pandas as pd
       df = pd.read_csv(input_data_path)
       return len(df)
@@ -185,6 +229,7 @@ class ExperimentsWorkflow:
           ngram_range=data.hyperparameters.get("ngram_range", (1, 3)),
           max_iter=data.hyperparameters.get("max_iter", 1000),
         ),
+        experiment_config=data.experiment_config,
       ),
       id=f"svm-experiment-{workflow.uuid4()}",
       task_queue=WorflowTaskQueue.ML_TASK_QUEUE.value,
@@ -217,6 +262,7 @@ class ExperimentsWorkflow:
           class_weight_0=data.hyperparameters.get("class_weight_0", 1),
           class_weight_1=data.hyperparameters.get("class_weight_1", 44),
         ),
+        experiment_config=data.experiment_config,
       ),
       id=f"lstm-experiment-{workflow.uuid4()}",
       task_queue=WorflowTaskQueue.ML_TASK_QUEUE.value,
@@ -249,6 +295,7 @@ class ExperimentsWorkflow:
           class_weight_0=data.hyperparameters.get("class_weight_0", 1),
           class_weight_1=data.hyperparameters.get("class_weight_1", 44),
         ),
+        experiment_config=data.experiment_config,
       ),
       id=f"lstm-attention-experiment-{workflow.uuid4()}",
       task_queue=WorflowTaskQueue.ML_TASK_QUEUE.value,
@@ -281,6 +328,7 @@ class ExperimentsWorkflow:
           class_weight_0=data.hyperparameters.get("class_weight_0", 1),
           class_weight_1=data.hyperparameters.get("class_weight_1", 44),
         ),
+        experiment_config=data.experiment_config,
       ),
       id=f"bi-lstm-experiment-{workflow.uuid4()}",
       task_queue=WorflowTaskQueue.ML_TASK_QUEUE.value,
@@ -313,171 +361,25 @@ class ExperimentsWorkflow:
           class_weight_0=data.hyperparameters.get("class_weight_0", 1),
           class_weight_1=data.hyperparameters.get("class_weight_1", 44),
         ),
+        experiment_config=data.experiment_config,
       ),
       id=f"bi-lstm-attention-experiment-{workflow.uuid4()}",
       task_queue=WorflowTaskQueue.ML_TASK_QUEUE.value,
     )
 
-  async def _generate_machine_specs_file(self, input_data_path: str, detailed_results: List[ExperimentResult] = None) -> str:
-    """Generate a file with detailed machine specifications"""
-    try:
-      data_dir = "data"
-      os.makedirs(data_dir, exist_ok=True)
-      
-      timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-      filename = f"machine_specs_{timestamp}.txt"
-      filepath = os.path.join(data_dir, filename)
-      
-      with open(filepath, 'w', encoding='utf-8') as f:
-        f.write("=== ESPECIFICAÇÕES DA MÁQUINA ===\n\n")
-        
-        f.write("SISTEMA OPERACIONAL:\n")
-        f.write(f"  Sistema: {platform.system()}\n")
-        f.write(f"  Versão: {platform.release()}\n")
-        f.write(f"  Arquitetura: {platform.architecture()[0]}\n")
-        f.write(f"  Processador: {platform.processor()}\n")
-        f.write(f"  Máquina: {platform.machine()}\n")
-        f.write(f"  Nó: {platform.node()}\n")
-        f.write(f"  Plataforma: {platform.platform()}\n\n")
-        
-        # Informações de CPU
-        f.write("PROCESSADOR:\n")
-        f.write(f"  Núcleos físicos: {psutil.cpu_count(logical=False)}\n")
-        f.write(f"  Núcleos lógicos: {psutil.cpu_count(logical=True)}\n")
-        f.write(f"  Frequência máxima: {psutil.cpu_freq().max if psutil.cpu_freq() else 'N/A'} MHz\n")
-        f.write(f"  Frequência atual: {psutil.cpu_freq().current if psutil.cpu_freq() else 'N/A'} MHz\n")
-        
-        # Informações de memória
-        memory = psutil.virtual_memory()
-        f.write(f"\nMEMÓRIA:\n")
-        f.write(f"  Total: {memory.total / (1024**3):.2f} GB\n")
-        f.write(f"  Disponível: {memory.available / (1024**3):.2f} GB\n")
-        f.write(f"  Usada: {memory.used / (1024**3):.2f} GB\n")
-        f.write(f"  Percentual usado: {memory.percent}%\n")
-        
-        # Informações de disco
-        disk = psutil.disk_usage('/')
-        f.write(f"\nDISCO:\n")
-        f.write(f"  Total: {disk.total / (1024**3):.2f} GB\n")
-        f.write(f"  Usado: {disk.used / (1024**3):.2f} GB\n")
-        f.write(f"  Livre: {disk.free / (1024**3):.2f} GB\n")
-        f.write(f"  Percentual usado: {(disk.used / disk.total) * 100:.2f}%\n")
-        
-        # Informações de GPU (se disponível)
-        f.write(f"\nGPU:\n")
-        try:
-          # Tentar detectar NVIDIA GPU
-          result = subprocess.run(['nvidia-smi', '--query-gpu=name,memory.total,driver_version', '--format=csv,noheader,nounits'], 
-                                capture_output=True, text=True, timeout=10)
-          if result.returncode == 0:
-            gpu_info = result.stdout.strip().split('\n')
-            for i, gpu in enumerate(gpu_info):
-              parts = gpu.split(', ')
-              if len(parts) >= 3:
-                f.write(f"  GPU {i+1}: {parts[0]}\n")
-                f.write(f"    Memória: {parts[1]} MB\n")
-                f.write(f"    Driver: {parts[2]}\n")
-          else:
-            f.write("  Nenhuma GPU NVIDIA detectada\n")
-        except (subprocess.TimeoutExpired, FileNotFoundError, subprocess.CalledProcessError):
-          f.write("  Informações de GPU não disponíveis\n")
-        
-        # Informações de Python
-        f.write(f"\nPYTHON:\n")
-        f.write(f"  Versão: {platform.python_version()}\n")
-        f.write(f"  Implementação: {platform.python_implementation()}\n")
-        f.write(f"  Compilador: {platform.python_compiler()}\n")
-        
-        # Informações de bibliotecas ML
-        f.write(f"\nBIBLIOTECAS DE MACHINE LEARNING:\n")
-        try:
-          import tensorflow as tf
-          f.write(f"  TensorFlow: {tf.__version__}\n")
-        except ImportError:
-          f.write("  TensorFlow: Não instalado\n")
-        
-        try:
-          import torch
-          f.write(f"  PyTorch: {torch.__version__}\n")
-        except ImportError:
-          f.write("  PyTorch: Não instalado\n")
-        
-        try:
-          import sklearn
-          f.write(f"  Scikit-learn: {sklearn.__version__}\n")
-        except ImportError:
-          f.write("  Scikit-learn: Não instalado\n")
-        
-        try:
-          import pandas as pd
-          f.write(f"  Pandas: {pd.__version__}\n")
-        except ImportError:
-          f.write("  Pandas: Não instalado\n")
-        
-        try:
-          import numpy as np
-          f.write(f"  NumPy: {np.__version__}\n")
-        except ImportError:
-          f.write("  NumPy: Não instalado\n")
-        
-        # Data e hora da execução
-        f.write(f"\nEXECUÇÃO:\n")
-        f.write(f"  Data/Hora: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
-        f.write(f"  Dados de entrada: {input_data_path}\n")
-        
-        # Métricas de performance dos experimentos
-        if detailed_results:
-          f.write(f"\nMÉTRICAS DE PERFORMANCE DOS EXPERIMENTOS:\n")
-          f.write(f"  {'='*60}\n")
-          
-          for result in detailed_results:
-            f.write(f"\n  {result.experiment_name}:\n")
-            f.write(f"    Status: {result.status}\n")
-            f.write(f"    Tempo de execução: {result.execution_time_minutes:.2f} minutos\n")
-            
-            if result.system_metrics:
-              f.write(f"    Memória:\n")
-              f.write(f"      Pico: {result.system_metrics.peak_memory_mb:.2f} MB\n")
-              f.write(f"      Média: {result.system_metrics.average_memory_mb:.2f} MB\n")
-              
-              f.write(f"    CPU:\n")
-              f.write(f"      Pico: {result.system_metrics.peak_cpu_percent:.2f}%\n")
-              f.write(f"      Média: {result.system_metrics.average_cpu_percent:.2f}%\n")
-              
-              f.write(f"    Throughput: {result.system_metrics.throughput_samples_per_second:.2f} amostras/seg\n")
-              f.write(f"    Latência média: {result.system_metrics.average_latency_ms:.2f} ms\n")
-              
-              f.write(f"    Tempos por etapa:\n")
-              f.write(f"      Carregamento de dados: {result.system_metrics.data_loading_time_ms:.2f} ms\n")
-              f.write(f"      Treinamento do modelo: {result.system_metrics.model_training_time_ms:.2f} ms\n")
-              f.write(f"      Avaliação do modelo: {result.system_metrics.model_evaluation_time_ms:.2f} ms\n")
-              
-              f.write(f"    Eficiências:\n")
-              f.write(f"      Memória: {result.system_metrics.memory_efficiency:.4f}\n")
-              f.write(f"      CPU: {result.system_metrics.cpu_efficiency:.4f}\n")
-              f.write(f"      Energia: {result.system_metrics.energy_efficiency_score:.2f}/100\n")
-            else:
-              f.write(f"    Métricas do sistema: Não disponíveis\n")
-            
-            if result.error_message:
-              f.write(f"    Erro: {result.error_message}\n")
-      
-      workflow.logger.info(f"Especificações da máquina salvas em: {filepath}")
-      return filepath
-      
-    except Exception as e:
-      workflow.logger.error(f"Erro ao gerar especificações da máquina: {e}")
-      return ""
 
-  async def _save_results_to_file(self, detailed_results: List[ExperimentResult], input_data_path: str) -> str:
+  async def _save_results_to_file(self, detailed_results: List[ExperimentResult], input_data_path: str, experiment_config: ExperimentConfig = None) -> str:
     """Save experiment results to CSV file in data directory"""
     try:
-      data_dir = "data"
-      os.makedirs(data_dir, exist_ok=True)
-      
-      timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-      filename = f"experiment_results_{timestamp}.csv"
-      filepath = os.path.join(data_dir, filename)
+      if experiment_config:
+        filepath = experiment_config.results_file_path
+        os.makedirs(os.path.dirname(filepath), exist_ok=True)
+      else:
+        data_dir = "data"
+        os.makedirs(data_dir, exist_ok=True)
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        filename = f"experiment_results_{timestamp}.csv"
+        filepath = os.path.join(data_dir, filename)
       
       results_data = []
       for result in detailed_results:

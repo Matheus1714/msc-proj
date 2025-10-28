@@ -13,6 +13,7 @@ from src.activities.load_glove_embeddings_activity import load_glove_embeddings_
 from src.activities.prepare_data_for_experiment_activity import prepare_data_for_experiment_activity
 from src.activities.tokenizer_activity import tokenizer_activity
 from src.activities.split_data_activity import split_data_activity
+from src.activities.generate_machine_specs_activity import generate_machine_specs_activity
 
 # Experiments Workflows
 
@@ -54,6 +55,7 @@ ml_worker = {
         prepare_data_for_experiment_activity,
         tokenizer_activity,
         split_data_activity,
+        generate_machine_specs_activity,
     ],
     "workflow_runner": UnsandboxedWorkflowRunner(),
     "task_queue": WorflowTaskQueue.ML_TASK_QUEUE.value,

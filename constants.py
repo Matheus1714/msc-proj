@@ -1,4 +1,5 @@
 from enum import Enum
+from dataclasses import dataclass
 
 SOURCE_INPUT_FILES = [
   ("UrinaryIncontinence.csv", "/Users/matheusmota/src/github/msc/systematic-review-datasets/datasets/Cohen_2006/output/local/UrinaryIncontinence.csv"),
@@ -40,18 +41,54 @@ class ExperimentType(Enum):
   LSTM_WITH_GLOVE_AND_ATTENTION = "lstm_with_glove_and_attention"
 
 GLOVE_6B_300D_FILE_PATH = "data/word_vectors/glove/glove.6B.300d.txt"
-GLOVE_EMBEDDINGS_PATH = "data/glove_embeddings.npy"
-TOKENIZED_DATA_PATH = "data/tokenized_data.csv"
-WORD_INDEX_PATH = "data/word_index.json"
 
-X_SEQ_PATH = "data/x_seq.npy"
-Y_PATH = "data/y.npy"
-
-X_TRAIN_PATH = "data/x_train.npy"
-X_VAL_PATH = "data/x_val.npy"
-X_TEST_PATH = "data/x_test.npy"
-Y_TRAIN_PATH = "data/y_train.npy"
-Y_VAL_PATH = "data/y_val.npy"
-Y_TEST_PATH = "data/y_test.npy"
-
-PREPARED_DATA_PATH = "data/prepared_data.csv"
+@dataclass
+class ExperimentConfig:
+  experiment_id: str
+  base_dir: str
+  prepared_data_path: str
+  tokenized_data_path: str
+  word_index_path: str
+  glove_embeddings_path: str
+  x_seq_path: str
+  y_path: str
+  x_train_path: str
+  x_val_path: str
+  x_test_path: str
+  y_train_path: str
+  y_val_path: str
+  y_test_path: str
+  results_file_path: str
+  machine_specs_file_path: str
+  
+  @classmethod
+  def create(cls, experiment_id: str = None):
+    if experiment_id is None:
+      from datetime import datetime
+      experiment_id = f"exp_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+    
+    base_dir = f"data/experiments/{experiment_id}"
+    
+    return cls(
+      experiment_id=experiment_id,
+      base_dir=base_dir,
+      prepared_data_path=f"{base_dir}/prepared_data.csv",
+      tokenized_data_path=f"{base_dir}/tokenized_data.csv",
+      word_index_path=f"{base_dir}/word_index.json",
+      glove_embeddings_path=f"{base_dir}/glove_embeddings.npy",
+      x_seq_path=f"{base_dir}/x_seq.npy",
+      y_path=f"{base_dir}/y.npy",
+      x_train_path=f"{base_dir}/x_train.npy",
+      x_val_path=f"{base_dir}/x_val.npy",
+      x_test_path=f"{base_dir}/x_test.npy",
+      y_train_path=f"{base_dir}/y_train.npy",
+      y_val_path=f"{base_dir}/y_val.npy",
+      y_test_path=f"{base_dir}/y_test.npy",
+      results_file_path=f"{base_dir}/experiment_results.csv",
+      machine_specs_file_path=f"{base_dir}/machine_specs.txt"
+    )
+  
+  def create_directories(self):
+    import os
+    os.makedirs(self.base_dir, exist_ok=True)
+    return self.base_dir

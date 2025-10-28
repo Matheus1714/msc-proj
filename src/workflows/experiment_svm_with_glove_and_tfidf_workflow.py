@@ -29,7 +29,7 @@ from src.activities.split_data_activity import (
 from constants import (
   WorflowTaskQueue,
   GLOVE_6B_300D_FILE_PATH,
-  GLOVE_EMBEDDINGS_PATH,
+  ExperimentConfig,
 )
 
 from src.utils.calculate_metrics import EvaluationData
@@ -48,6 +48,7 @@ class ExperimentSVMWithGloveAndTFIDFHyperparameters(TypedDict):
 class ExperimentSVMWithGloveAndTFIDFWorkflowIn:
   input_data_path: str
   hyperparameters: ExperimentSVMWithGloveAndTFIDFHyperparameters
+  experiment_config: ExperimentConfig
 
 @dataclass
 class ExperimentSVMWithGloveAndTFIDFWorkflowOut:
@@ -57,10 +58,13 @@ class ExperimentSVMWithGloveAndTFIDFWorkflowOut:
 class ExperimentSVMWithGloveAndTFIDFWorkflow:
   @workflow.run
   async def run(self, data: ExperimentSVMWithGloveAndTFIDFWorkflowIn) -> ExperimentSVMWithGloveAndTFIDFWorkflowOut:
+    data.experiment_config.create_directories()
+    
     prepare_data_for_experiment_result: PrepareDataForExperimentOut = await workflow.execute_activity(
       prepare_data_for_experiment_activity,
       arg=PrepareDataForExperimentIn(
         input_data_path=data.input_data_path,
+        output_data_path=data.experiment_config.prepared_data_path,
         random_state=data.hyperparameters["random_state"],
       ),
       start_to_close_timeout=timedelta(minutes=5),
@@ -71,6 +75,10 @@ class ExperimentSVMWithGloveAndTFIDFWorkflow:
       tokenizer_activity,
       arg=TokenizerIn(
         input_data_path=prepare_data_for_experiment_result.output_data_path,
+        tokenized_data_path=data.experiment_config.tokenized_data_path,
+        word_index_path=data.experiment_config.word_index_path,
+        x_seq_path=data.experiment_config.x_seq_path,
+        y_path=data.experiment_config.y_path,
         max_words=data.hyperparameters["max_words"],
         max_len=data.hyperparameters["max_len"],
       ),
@@ -82,7 +90,7 @@ class ExperimentSVMWithGloveAndTFIDFWorkflow:
       load_glove_embeddings_activity,
       arg=LoadGloveEmbeddingsIn(
         glove_file_path=GLOVE_6B_300D_FILE_PATH,
-        output_path=GLOVE_EMBEDDINGS_PATH,
+        output_path=data.experiment_config.glove_embeddings_path,
         max_words=data.hyperparameters["max_words"],
         word_index_path=tokenizer_result.word_index_path,
       ),
@@ -95,6 +103,12 @@ class ExperimentSVMWithGloveAndTFIDFWorkflow:
       arg=SplitDataIn(
         x_seq_path=tokenizer_result.x_seq_path,
         y_path=tokenizer_result.y_path,
+        x_train_path=data.experiment_config.x_train_path,
+        x_val_path=data.experiment_config.x_val_path,
+        x_test_path=data.experiment_config.x_test_path,
+        y_train_path=data.experiment_config.y_train_path,
+        y_val_path=data.experiment_config.y_val_path,
+        y_test_path=data.experiment_config.y_test_path,
         random_state=data.hyperparameters["random_state"],
       ),
       start_to_close_timeout=timedelta(minutes=5),
