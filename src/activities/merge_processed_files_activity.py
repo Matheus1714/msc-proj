@@ -1,9 +1,13 @@
 import os
 import pandas as pd
 from temporalio import activity
+from dataclasses import dataclass
+from typing import List
 
-from src.default_types import MergeProcessedDataIn
-
+@dataclass
+class MergeProcessedDataIn:
+  all_processed_files: List[str]
+  output_path: str
 
 @activity.defn
 async def merge_processed_files_activity(data: MergeProcessedDataIn) -> int:

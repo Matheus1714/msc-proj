@@ -3,11 +3,36 @@ import hashlib
 import json
 from datetime import datetime
 from temporalio import activity
+from dataclasses import dataclass
+from typing import (
+  TypedDict,
+  List,
+  NewType,
+)
 
-from src.default_types import AcademicWork, ProcessGoogleDriveFileIn, ProcessGoogleDriveFileOut
+Id = NewType("Id", str)
+
+class AcademicWork(TypedDict):
+  id: str
+  title: str
+  abstract: str
+  keywords: List[str]
+  included: bool
+  db_source: str
+  created_at: datetime
+  updated_at: datetime
+
+@dataclass
+class ProcessFileIn:
+  file_name: str
+  file_path: str
+
+@dataclass
+class ProcessFileOut:
+  file_path: str
 
 @activity.defn
-async def process_files_activity(params: ProcessGoogleDriveFileIn) -> ProcessGoogleDriveFileOut | None:
+async def process_files_activity(params: ProcessFileIn) -> ProcessFileOut | None:
   # Adicionar debug para ver o que está chegando
   activity.logger.info(f"Tipo de params.file_name: {type(params.file_name)}")
   activity.logger.info(f"Valor de params.file_name: {params.file_name}")
@@ -61,6 +86,6 @@ async def process_files_activity(params: ProcessGoogleDriveFileIn) -> ProcessGoo
 
   activity.logger.info(f"Processados {len(works)} trabalhos de {file_name}")
 
-  return ProcessGoogleDriveFileOut(
+  return ProcessFileOut(
     file_path=output_path,
   )
