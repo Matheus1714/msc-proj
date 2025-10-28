@@ -15,6 +15,7 @@ from src.activities.prepare_data_for_experiment_activity import (
 from src.activities.run_experiment_svm_with_glove_and_tfidf_activity import (
   run_experiment_svm_with_glove_and_tfidf_activity,
   RunExperimentSVMWithGloveAndTFIDFIn,
+  RunExperimentSVMWithGloveAndTFIDFOut,
 )
 from src.activities.tokenizer_activity import (
   tokenizer_activity,
@@ -30,6 +31,8 @@ from constants import (
   GLOVE_6B_300D_FILE_PATH,
   GLOVE_EMBEDDINGS_PATH,
 )
+
+from src.utils.calculate_metrics import EvaluationData
 
 class ExperimentSVMWithGloveAndTFIDFHyperparameters(TypedDict):
   max_words: int
@@ -48,7 +51,7 @@ class ExperimentSVMWithGloveAndTFIDFWorkflowIn:
 
 @dataclass
 class ExperimentSVMWithGloveAndTFIDFWorkflowOut:
-  ...
+  metrics: EvaluationData
 
 @workflow.defn
 class ExperimentSVMWithGloveAndTFIDFWorkflow:
@@ -98,7 +101,7 @@ class ExperimentSVMWithGloveAndTFIDFWorkflow:
       task_queue=WorflowTaskQueue.ML_TASK_QUEUE.value,
     )
 
-    await workflow.execute_activity(
+    experiment_result: RunExperimentSVMWithGloveAndTFIDFOut = await workflow.execute_activity(
       run_experiment_svm_with_glove_and_tfidf_activity,
       arg=RunExperimentSVMWithGloveAndTFIDFIn(
         input_data_path=prepare_data_for_experiment_result.output_data_path,
@@ -111,4 +114,4 @@ class ExperimentSVMWithGloveAndTFIDFWorkflow:
       task_queue=WorflowTaskQueue.ML_TASK_QUEUE.value,
     )
 
-    return ExperimentSVMWithGloveAndTFIDFWorkflowOut()
+    return ExperimentSVMWithGloveAndTFIDFWorkflowOut(metrics=experiment_result.metrics)

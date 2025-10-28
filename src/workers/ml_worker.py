@@ -3,6 +3,7 @@ from temporalio.worker import UnsandboxedWorkflowRunner
 # Workflows
 
 from src.workflows.data_preprocessing_workflow import DataPreprocessingWorkflow
+from src.workflows.experiments_workflow import ExperimentsWorkflow
 
 # Activities
 
@@ -39,6 +40,7 @@ ml_worker = {
         ExperimentLSTMWithGloveAndAttentionWorkflow,
         ExperimentBiLSTMWithGloveWorkflow,
         ExperimentBiLSTMWithGloveAndAttentionWorkflow,
+        ExperimentsWorkflow,
     ],
     "activities": [
         run_experiment_svm_with_glove_and_tfidf_activity,

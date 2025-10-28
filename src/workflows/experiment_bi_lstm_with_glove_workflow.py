@@ -26,12 +26,15 @@ from src.activities.split_data_activity import (
 from src.activities.run_experiment_bi_lstm_with_glove_activity import (
   run_experiment_bi_lstm_with_glove_activity,
   RunExperimentBiLSTMWithGloveIn,
+  RunExperimentBiLSTMWithGloveOut,
 )
 from constants import (
   WorflowTaskQueue,
   GLOVE_6B_300D_FILE_PATH,
   GLOVE_EMBEDDINGS_PATH,
 )
+
+from src.utils.calculate_metrics import EvaluationData
 
 class ExperimentBiLSTMWithGloveHyperparameters(TypedDict):
   max_words: int
@@ -61,7 +64,7 @@ class ExperimentBiLSTMWithGloveWorkflowIn:
 
 @dataclass
 class ExperimentBiLSTMWithGloveWorkflowOut:
-  ...
+  metrics: EvaluationData
 
 @workflow.defn
 class ExperimentBiLSTMWithGloveWorkflow:
@@ -111,7 +114,7 @@ class ExperimentBiLSTMWithGloveWorkflow:
       task_queue=WorflowTaskQueue.ML_TASK_QUEUE.value,
     )
 
-    await workflow.execute_activity(
+    experiment_result: RunExperimentBiLSTMWithGloveOut = await workflow.execute_activity(
       run_experiment_bi_lstm_with_glove_activity,
       arg=RunExperimentBiLSTMWithGloveIn(
         input_data_path=data.input_data_path,
@@ -142,4 +145,4 @@ class ExperimentBiLSTMWithGloveWorkflow:
       task_queue=WorflowTaskQueue.ML_TASK_QUEUE.value,
     )
 
-    return ExperimentBiLSTMWithGloveWorkflowOut()
+    return ExperimentBiLSTMWithGloveWorkflowOut(metrics=experiment_result.metrics)

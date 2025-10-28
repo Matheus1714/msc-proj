@@ -39,7 +39,6 @@ class ExperimentType(Enum):
   LSTM_WITH_GLOVE = "lstm_with_glove"
   LSTM_WITH_GLOVE_AND_ATTENTION = "lstm_with_glove_and_attention"
 
-
 GLOVE_6B_300D_FILE_PATH = "data/word_vectors/glove/glove.6B.300d.txt"
 GLOVE_EMBEDDINGS_PATH = "data/glove_embeddings.npy"
 TOKENIZED_DATA_PATH = "data/tokenized_data.csv"

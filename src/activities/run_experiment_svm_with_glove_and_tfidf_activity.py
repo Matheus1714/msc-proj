@@ -10,6 +10,7 @@ from sklearn.linear_model import SGDClassifier
 from sklearn.model_selection import StratifiedKFold, cross_val_predict
 
 from src.utils.calculate_metrics import calculate_metrics, EvaluationData
+from src.utils.convert_to_native import convert_to_native
 
 @dataclass
 class RunExperimentSVMWithGloveAndTFIDFIn:
@@ -36,4 +37,4 @@ async def run_experiment_svm_with_glove_and_tfidf_activity(data: RunExperimentSV
 
   metrics = calculate_metrics(y, y_scores)
 
-  return RunExperimentSVMWithGloveAndTFIDFOut(metrics=metrics)
+  return RunExperimentSVMWithGloveAndTFIDFOut(metrics=convert_to_native(metrics))

@@ -26,12 +26,15 @@ from src.activities.split_data_activity import (
 from src.activities.run_experiment_lstm_with_glove_and_attention_activity import (
   run_experiment_lstm_with_glove_and_attention_activity,
   RunExperimentLSTMWithGloveAndAttentionIn,
+  RunExperimentLSTMWithGloveAndAttentionOut,
 )
 from constants import (
   WorflowTaskQueue,
   GLOVE_6B_300D_FILE_PATH,
   GLOVE_EMBEDDINGS_PATH,
 )
+
+from src.utils.calculate_metrics import EvaluationData
 
 class ExperimentLSTMWithGloveAndAttentionHyperparameters(TypedDict):
   max_words: int
@@ -61,7 +64,7 @@ class ExperimentLSTMWithGloveAndAttentionWorkflowIn:
 
 @dataclass
 class ExperimentLSTMWithGloveAndAttentionWorkflowOut:
-  ...
+  metrics: EvaluationData
 
 @workflow.defn
 class ExperimentLSTMWithGloveAndAttentionWorkflow:
@@ -111,7 +114,7 @@ class ExperimentLSTMWithGloveAndAttentionWorkflow:
       task_queue=WorflowTaskQueue.ML_TASK_QUEUE.value,
     )
 
-    await workflow.execute_activity(
+    experiment_result: RunExperimentLSTMWithGloveAndAttentionOut = await workflow.execute_activity(
       run_experiment_lstm_with_glove_and_attention_activity,
       arg=RunExperimentLSTMWithGloveAndAttentionIn(
         input_data_path=data.input_data_path,
@@ -142,4 +145,4 @@ class ExperimentLSTMWithGloveAndAttentionWorkflow:
       task_queue=WorflowTaskQueue.ML_TASK_QUEUE.value,
     )
 
-    return ExperimentLSTMWithGloveAndAttentionWorkflowOut()
+    return ExperimentLSTMWithGloveAndAttentionWorkflowOut(metrics=experiment_result.metrics)
