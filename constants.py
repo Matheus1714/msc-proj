@@ -62,7 +62,5 @@ PREPARED_DATA_PATH = "data/prepared_data.csv"
 
 # ExperimentBiLSTMWithGloveAndAttention
 
-# ExperimentLSTMWithGlove
-
 # ExperimentLSTMWithGloveAndAttention
 
