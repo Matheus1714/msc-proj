@@ -148,7 +148,6 @@ class ExperimentsWorkflow:
       
       workflow.logger.info(f"Execução concluída: {len(completed_experiments)} sucessos, {len(failed_experiments)} falhas")
       
-      # Converter detailed_results para formato serializável
       serializable_results = []
       for result in detailed_results:
         result_dict = {
