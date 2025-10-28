@@ -1,22 +1,28 @@
 import asyncio
 from temporalio import workflow
+from dataclasses import dataclass
 from typing import List
 from datetime import timedelta
 from temporalio.common import RetryPolicy
 
-from src.activities.process_files_activity import process_files_activity
-from src.activities.merge_processed_files_activity import merge_processed_files_activity
-from constants import WorflowTaskQueue
-
-from src.default_types import (
-  DataPreprocessingWorkflowIn,
-  DataPreprocessingWorkflowOut,
-  ProcessGoogleDriveFileOut,
-  ProcessGoogleDriveFileIn,
+from src.activities.process_files_activity import (
+  process_files_activity,
+  ProcessFileIn,
+  ProcessFileOut,
+)
+from src.activities.merge_processed_files_activity import (
+  merge_processed_files_activity,
   MergeProcessedDataIn,
 )
+from constants import WorflowTaskQueue, SOURCE_INPUT_FILES
 
-from constants import SOURCE_INPUT_FILES
+@dataclass
+class DataPreprocessingWorkflowIn:
+  output_path: str
+
+@dataclass
+class DataPreprocessingWorkflowOut:
+  total_processed_works: int
 
 @workflow.defn
 class DataPreprocessingWorkflow:
@@ -26,7 +32,7 @@ class DataPreprocessingWorkflow:
       workflow.logger.info(f"Iniciando pre-processamento de {len(SOURCE_INPUT_FILES)} arquivos")
       
       concurrency = 5
-      all_processed_files: List[ProcessGoogleDriveFileOut | None] = []
+      all_processed_files: List[ProcessFileOut | None] = []
       
       for i in range(0, len(SOURCE_INPUT_FILES), concurrency):
         current_batch = SOURCE_INPUT_FILES[i:i+concurrency]
@@ -34,7 +40,7 @@ class DataPreprocessingWorkflow:
         batch_tasks = [
           workflow.execute_activity(
             process_files_activity,
-            arg=ProcessGoogleDriveFileIn(
+            arg=ProcessFileIn(
               file_name=file_name,
               file_path=file_path,
             ),
@@ -48,7 +54,7 @@ class DataPreprocessingWorkflow:
           )
           for file_name, file_path in current_batch
         ]
-        batch_results: List[ProcessGoogleDriveFileOut | None] = await asyncio.gather(*batch_tasks)
+        batch_results: List[ProcessFileOut | None] = await asyncio.gather(*batch_tasks)
         all_processed_files.extend(batch_results)
       
       valid_paths = [d.file_path for d in all_processed_files if d is not None]
