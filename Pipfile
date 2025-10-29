@@ -23,6 +23,7 @@ torch = "==2.9.0"
 torchvision = "==0.24.0"
 torchaudio = "==2.9.0"
 psutil = "==6.1.0"
+seaborn = "*"
 
 [dev-packages]
 mkdocs = "==1.6.1"
