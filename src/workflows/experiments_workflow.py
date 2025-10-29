@@ -35,6 +35,7 @@ from src.workflows.experiment_bi_lstm_with_glove_and_attention_workflow import (
 from constants import WorflowTaskQueue, ExperimentConfig
 from src.utils.calculate_metrics import EvaluationData
 from src.utils.system_metrics import SystemMetrics, SystemMetricsCollector
+from src.utils.convert_to_native import convert_to_native
 from src.activities.generate_machine_specs_activity import (
   generate_machine_specs_activity,
   GenerateMachineSpecsIn,
@@ -55,9 +56,9 @@ class ExperimentsWorkflowIn:
 @dataclass
 class ExperimentResult:
   experiment_name: str
-  status: str  # "success" or "failed"
+  status: str
   execution_time_minutes: float = None
-  metrics: EvaluationData = None
+  metrics: Dict[str, Any] = None
   system_metrics: SystemMetrics = None
   error_message: str = None
 
@@ -169,11 +170,14 @@ class ExperimentsWorkflow:
         else:
           workflow.logger.info(f"Experimento {experiment_names[i]} concluído com sucesso em {execution_times[i]:.2f} minutos")
           completed_experiments.append(experiment_names[i])
+          
+          converted_metrics = convert_to_native(result.metrics) if result.metrics else None
+          
           detailed_results.append(ExperimentResult(
             experiment_name=experiment_names[i],
             status="success",
             execution_time_minutes=execution_times[i],
-            metrics=result.metrics,
+            metrics=converted_metrics,
             system_metrics=system_metrics
           ))
       
