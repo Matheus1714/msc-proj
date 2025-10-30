@@ -33,11 +33,9 @@ class ProcessFileOut:
 
 @activity.defn
 async def process_files_activity(params: ProcessFileIn) -> ProcessFileOut | None:
-  # Adicionar debug para ver o que está chegando
   activity.logger.info(f"Tipo de params.file_name: {type(params.file_name)}")
   activity.logger.info(f"Valor de params.file_name: {params.file_name}")
-  
-  # Verificação de tipo para resolver o problema
+
   if isinstance(params.file_name, list):
     file_name = params.file_name[0] if params.file_name else ""
     activity.logger.warning(f"file_name era uma lista, convertido para: {file_name}")

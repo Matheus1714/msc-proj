@@ -21,8 +21,10 @@ markdown_extensions:
 - pymdownx.superfences
 nav:
 - Início: index.md
+- experiment_directories_guide: experiment_directories_guide.md
 - experiment_flow_diagram: experiment_flow_diagram.md
 - experiment_workflow_structure: experiment_workflow_structure.md
+- glove_download_guide: glove_download_guide.md
 - Outros:
   - Outros: others/index.md
   - Cronograma: others/schedule.md
@@ -37,3 +39,4 @@ nav:
     - 0002_hyperparams_sensibility: rfcs/files/0002_hyperparams_sensibility.md
 - Study:
   - Técnicas de Classificação de Textos: study/0001_text_classification_techniques.md
+- system_metrics_guide: system_metrics_guide.md
