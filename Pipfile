@@ -29,6 +29,9 @@ psutil = "*"
 mkdocs = "==1.6.1"
 mkdocs-material = "==9.6.14"
 ipykernel = "==6.30.1"
+pytest = "*"
+pytest-cov = "*"
+pytest-asyncio = "*"
 
 [requires]
 python_version = "3.10"
