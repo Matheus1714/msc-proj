@@ -26,9 +26,52 @@ O andamento do projeto pode ser acompanhado pelo [cronograma](/msc-proj/others/s
 
 ## 🛠️ Tecnologias e Ferramentas
 
-- [MkDocs](https://www.mkdocs.org/)
-- [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/)
-- Python, Jupyter Notebooks, ferramentas de NLP, etc.
+- **Temporal**: Orquestração de workflows distribuídos
+- **Python 3.10**: Linguagem principal do projeto
+- **TensorFlow/Keras**: Modelos de deep learning (LSTM, BiLSTM)
+- **scikit-learn**: Modelos clássicos de ML (SVM)
+- **GloVe Embeddings**: Vetores de palavras pré-treinados
+- **MkDocs**: Documentação do projeto
+- **Docker**: Containerização dos serviços
+- **Jupyter Notebooks**: Análises e visualizações
+
+## 🚀 Início Rápido
+
+Para começar a usar o projeto:
+
+1. **Instale as dependências**:
+   ```bash
+   pipenv install
+   pipenv shell
+   ```
+
+2. **Configure o ambiente**:
+   - Crie um arquivo `.env` com `TEMPORAL_CONNECT=localhost:7233`
+
+3. **Inicie os serviços Docker**:
+   ```bash
+   docker-compose up -d
+   ```
+
+4. **Inicie o worker Temporal** (em terminal separado):
+   ```bash
+   python scripts/start_ml_worker.py
+   ```
+
+5. **Execute os experimentos**:
+   ```bash
+   python scripts/run_all_experiments.py
+   ```
+
+Para mais detalhes, consulte o [README do projeto](https://github.com/matheus1714/msc-proj/blob/master/README.md).
+
+## 📚 Guias Disponíveis
+
+- **[Guia de Estrutura de Workflows](experiment_workflow_structure.md)**: Entenda como os workflows estão organizados
+- **[Guia de Fluxo de Experimentos](experiment_flow_diagram.md)**: Visualize o fluxo completo de execução
+- **[Guia de Diretórios de Experimentos](experiment_directories_guide.md)**: Saiba onde os resultados são salvos
+- **[Guia de Download do GloVe](glove_download_guide.md)**: Como baixar e usar vetores GloVe
+- **[Guia de Métricas de Sistema](system_metrics_guide.md)**: Entenda as métricas coletadas
 
 ## Links Rápidos
 
