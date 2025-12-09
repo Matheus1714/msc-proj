@@ -1,5 +1,7 @@
 # Projeto de Mestrado
 
+![](.github/imgs/main.png)
+
 Projeto de mestrado focado na avaliação e comparação de diferentes modelos de Machine Learning para classificação de estudos em Revisões Sistemáticas da Literatura (RSL). O objetivo é identificar os modelos mais eficazes e contribuir para o desenvolvimento de uma base metodológica sólida que subsidie análises automatizadas futuras nesse domínio.
 
 ## 📋 Índice
@@ -15,6 +17,8 @@ Projeto de mestrado focado na avaliação e comparação de diferentes modelos d
 ## 🏗️ Conceito e Arquitetura
 
 ### Visão Geral
+
+![](.github/imgs/banner.png)
 
 Este projeto utiliza **Temporal** como orquestrador de workflows para executar experimentos de Machine Learning de forma distribuída e resiliente. A arquitetura é baseada em:
 
