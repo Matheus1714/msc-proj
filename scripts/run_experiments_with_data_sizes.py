@@ -1,9 +1,8 @@
-from logging import exception
 import os
 import asyncio
-import pandas as pd
 from dotenv import load_dotenv
 from uuid import uuid4
+from datetime import datetime
 
 from utils import setup_project_path
 setup_project_path()
@@ -14,35 +13,20 @@ from src.workflows.experiments_workflow import (
   ExperimentsWorkflowIn,
 )
 from constants import WorflowTaskQueue, ExperimentConfig
-
-def create_data_subsets(input_file_path: str, output_dir: str, max_rows: int = 2000):
-    os.makedirs(output_dir, exist_ok=True)
-    
-    df = pd.read_csv(input_file_path)
-    limit = len(df)
-
-    shuffled_df = df.sample(frac=1, random_state=42).reset_index(drop=True).head(max_rows)
-    total_rows = min(limit, max_rows)
-    percentages = [50, 75, 100]  # 10%, 25%, 50%, 75%, 100%
-    
-    data_subsets = []
-    
-    for pct in percentages:
-        target_rows = int((pct / 100) * total_rows)
-
-        subset_df = shuffled_df.head(target_rows)
-
-        filename = f"academic_works_{pct}pct_{len(subset_df)}rows.csv"
-        filepath = os.path.join(output_dir, filename)
-        
-        subset_df.to_csv(filepath, index=False)
-        
-        data_subsets.append((pct, filepath, len(subset_df)))
-    
-    return data_subsets
+from src.utils.create_subsets_from_csv import create_subsets_from_csv
+from src.utils.calculate_class_weights import calculate_class_weights_from_csv
 
 async def start_experiments_for_data_size(client, data_size_info, hyperparameters):
     pct, filepath, _ = data_size_info
+    
+    # Calcular class weights para este subset específico
+    class_weight_0, class_weight_1 = calculate_class_weights_from_csv(filepath)
+    print(f"⚖️  [{pct}%] Class weights calculados: class_weight_0={class_weight_0}, class_weight_1={class_weight_1}")
+    
+    # Atualizar class weights nos hyperparameters para este subset
+    hyperparameters_copy = hyperparameters.copy()
+    hyperparameters_copy["class_weight_0"] = class_weight_0
+    hyperparameters_copy["class_weight_1"] = class_weight_1
     
     experiment_config = ExperimentConfig.create()
     experiment_config.create_directories()
@@ -52,7 +36,7 @@ async def start_experiments_for_data_size(client, data_size_info, hyperparameter
             ExperimentsWorkflow.run,
             arg=ExperimentsWorkflowIn(
                 input_data_path=filepath,
-                hyperparameters=hyperparameters,
+                hyperparameters=hyperparameters_copy,
                 experiment_config=experiment_config,
             ),
             id=f"experiments-{pct}pct-{uuid4()}",
@@ -86,15 +70,20 @@ async def main():
             "metrics": ["accuracy"],
             "n_splits": 5,
             "verbose": 0,
-            "class_weight_0": 1,
-            "class_weight_1": 44,
+            "class_weight_0": 1,  # Será calculado automaticamente para cada subset
+            "class_weight_1": 44,  # Será calculado automaticamente para cada subset
             "ngram_range": (1, 3),
             "max_iter": 1000,
         }
         
         input_file = "data/academic_works.csv"
         data_subsets_dir = "data/subsets"
-        data_subsets = create_data_subsets(input_file, data_subsets_dir, max_rows=400)
+        data_subsets = create_subsets_from_csv(
+            input_file,
+            data_subsets_dir,
+            percentages=[50, 75, 100],
+            max_rows=400
+        )
 
         for data_size_info in data_subsets:
             await start_experiments_for_data_size(

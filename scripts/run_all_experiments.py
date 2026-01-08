@@ -12,12 +12,19 @@ from src.workflows.experiments_workflow import (
   ExperimentsWorkflowIn,
 )
 from constants import WorflowTaskQueue, ExperimentConfig
+from src.utils.calculate_class_weights import calculate_class_weights_from_csv
 
 async def main():    
   load_dotenv()
   
   try:
     client = await Client.connect(os.environ.get("TEMPORAL_CONNECT"))
+    
+    input_file = "data/academic_works.csv"
+    
+    # Calcular class weights automaticamente
+    class_weight_0, class_weight_1 = calculate_class_weights_from_csv(input_file)
+    print(f"⚖️  Class weights calculados: class_weight_0={class_weight_0}, class_weight_1={class_weight_1}")
     
     experiment_config = ExperimentConfig.create()
     experiment_config.create_directories()
@@ -42,8 +49,8 @@ async def main():
       "metrics": ["accuracy"],
       "n_splits": 5,
       "verbose": 0,
-      "class_weight_0": 1,
-      "class_weight_1": 44,
+      "class_weight_0": class_weight_0,  # Calculado automaticamente
+      "class_weight_1": class_weight_1,  # Calculado automaticamente
       "ngram_range": (1, 3),
       "max_iter": 1000,
     }
@@ -51,7 +58,7 @@ async def main():
     result = await client.execute_workflow(
       ExperimentsWorkflow.run,
       arg=ExperimentsWorkflowIn(
-        input_data_path="data/academic_works.csv",
+        input_data_path=input_file,
         hyperparameters=hyperparameters,
         experiment_config=experiment_config,
       ),
