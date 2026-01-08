@@ -1,0 +1,31 @@
+\begin{table}[H]
+\centering
+\caption{Resultados dos experimentais para 100\% dos dados.}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|m{7em}|m{6em}|m{6em}|m{6em}|m{6em}|m{6em}|}
+\hline
+\textbf{Métrica} & \textbf{SVM with GloVe and TF-IDF} & \textbf{LSTM with GloVe} & \textbf{LSTM with GloVe and Attention} & \textbf{BiLSTM with GloVe} & \textbf{BiLSTM with GloVe and Attention} \\ \hline
+\textbf{T (min)} & 0.22 & 4.68 & 4.88 & 10.23 & 10.55 \\ \hline
+\textbf{VP} & 12.00 & 12.00 & 12.00 & 12.00 & 12.00 \\ \hline
+\textbf{FP} & 335.00 & 324.00 & 341.00 & 372.00 & 357.00 \\ \hline
+\textbf{VN} & 53.00 & 64.00 & 47.00 & 16.00 & 31.00 \\ \hline
+\textbf{FN} & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ \hline
+\textbf{P} & 12.00 & 12.00 & 12.00 & 12.00 & 12.00 \\ \hline
+\textbf{N} & 388.00 & 388.00 & 388.00 & 388.00 & 388.00 \\ \hline
+\textbf{Precisão} & 0.03 & 0.04 & 0.03 & 0.03 & 0.03 \\ \hline
+\textbf{Recall} & 1.00 & 1.00 & 1.00 & 1.00 & 1.00 \\ \hline
+\textbf{F2} & 0.15 & 0.16 & 0.15 & 0.14 & 0.14 \\ \hline
+\textbf{WSS@95} & 0.08 & 0.11 & 0.07 & -0.01 & 0.03 \\ \hline
+\textbf{Memória Pico (MB)} & 3593.39 & 3449.55 & 3359.25 & 3742.61 & 3755.02 \\ \hline
+\textbf{Memória Média (MB)} & 3236.32 & 3163.93 & 3132.77 & 3260.16 & 3225.91 \\ \hline
+\textbf{CPU - Pico (\%)} & 92.50 & 99.00 & 97.60 & 100.00 & 100.00 \\ \hline
+\textbf{CPU - Média (\%)} & 23.59 & 21.44 & 19.49 & 20.48 & 23.11 \\ \hline
+\textbf{Amostras/s} & 30.02 & 1.43 & 1.37 & 0.65 & 0.63 \\ \hline
+\textbf{Lat. Média (ms)} & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ \hline
+\textbf{Ef. Memória} & 0.11 & 0.12 & 0.12 & 0.11 & 0.11 \\ \hline
+\textbf{Ef. CPU} & 0.56 & 13.09 & 15.01 & 29.98 & 27.40 \\ \hline
+\textbf{Ef. Energia} & 88.41 & 89.36 & 90.19 & 89.56 & 88.50 \\ \hline
+\end{tabular}
+}%
+\label{tab:ec:resultados_transp_1.0}
+\end{table}
