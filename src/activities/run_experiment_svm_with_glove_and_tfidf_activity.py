@@ -19,6 +19,8 @@ class RunExperimentSVMWithGloveAndTFIDFIn:
   random_state: int
   max_iter: int
   ngram_range: Tuple[int, int]
+  class_weight_0: float = 1.0
+  class_weight_1: float = 1.0
 
 @dataclass
 class RunExperimentSVMWithGloveAndTFIDFOut:
@@ -29,12 +31,24 @@ async def run_experiment_svm_with_glove_and_tfidf_activity(data: RunExperimentSV
   df = pd.read_csv(data.input_data_path)
   y = np.load(data.y_path)
 
+  if len(y) != len(df):
+    raise ValueError(f"Mismatch between y length ({len(y)}) and dataframe length ({len(df)})")
+
+  y = y.astype(int)
+
   vect = TfidfVectorizer(ngram_range=data.ngram_range)
   X_tfidf = vect.fit_transform(df["text"].to_list())
   cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=data.random_state)
-  clf = SGDClassifier(loss='hinge', penalty='l2', max_iter=data.max_iter, random_state=data.random_state)
+  clf = SGDClassifier(
+    loss='hinge', 
+    penalty='l2', 
+    max_iter=data.max_iter, 
+    random_state=data.random_state,
+    class_weight={0: data.class_weight_0, 1: data.class_weight_1}
+  )
   y_scores = cross_val_predict(clf, X_tfidf, y, cv=cv, method='decision_function')
 
   metrics = calculate_metrics(y, y_scores)
 
   return RunExperimentSVMWithGloveAndTFIDFOut(metrics=convert_to_native(metrics))
+

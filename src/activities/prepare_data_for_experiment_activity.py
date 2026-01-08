@@ -25,6 +25,7 @@ async def prepare_data_for_experiment_activity(data: PrepareDataForExperimentIn)
   df["text"] = (df["title"].fillna("") + " " +
                 df["keywords"].fillna("") + " " +
                 df["abstract"].fillna(""))
+  # df["text"] = df["abstract"].fillna("")
   
   df.to_csv(data.output_data_path, index=False)
 

@@ -26,9 +26,8 @@ from src.models.attention import BahdanauAttention
 
 @dataclass
 class RunExperimentBiLSTMWithGloveAndAttentionIn:
-  input_data_path: str
-  x_train_path: str
-  y_train_path: str
+  x_seq_path: str
+  y_path: str
   embedding_matrix_path: str
   max_len: int
   num_words: int
@@ -88,8 +87,8 @@ def _build_model(
 
 @activity.defn
 async def run_experiment_bi_lstm_with_glove_and_attention_activity(data: RunExperimentBiLSTMWithGloveAndAttentionIn) -> RunExperimentBiLSTMWithGloveAndAttentionOut:
-  x_train_full = np.load(data.x_train_path)
-  y_train_full = np.load(data.y_train_path)
+  x_seq = np.load(data.x_seq_path)
+  y = np.load(data.y_path)
   embedding_matrix = np.load(data.embedding_matrix_path)
 
   optimizer = Adam(learning_rate=data.learning_rate)
@@ -113,12 +112,12 @@ async def run_experiment_bi_lstm_with_glove_and_attention_activity(data: RunExpe
   )
 
   skf = StratifiedKFold(n_splits=data.n_splits, shuffle=True, random_state=data.random_state)
-  y_scores = np.zeros_like(y_train_full, dtype=float)
+  y_scores = np.zeros_like(y, dtype=float)
 
-  for fold, (train_idx, val_idx) in enumerate(skf.split(x_train_full, y_train_full)):
+  for fold, (train_idx, val_idx) in enumerate(skf.split(x_seq, y)):
     print(f"Fold {fold+1}/{data.n_splits}")
-    x_tr, x_val_k = x_train_full[train_idx], x_train_full[val_idx]
-    y_tr, y_val_k = y_train_full[train_idx], y_train_full[val_idx]
+    x_tr, x_val_k = x_seq[train_idx], x_seq[val_idx]
+    y_tr, y_val_k = y[train_idx], y[val_idx]
 
     model_fold = _build_model(
       max_len=data.max_len,
@@ -148,6 +147,6 @@ async def run_experiment_bi_lstm_with_glove_and_attention_activity(data: RunExpe
     )
     y_scores[val_idx] = model_fold.predict(x_val_k).flatten()
 
-  metrics = calculate_metrics(y_train_full, y_scores)
+  metrics = calculate_metrics(y, y_scores)
 
   return RunExperimentBiLSTMWithGloveAndAttentionOut(metrics=convert_to_native(metrics))

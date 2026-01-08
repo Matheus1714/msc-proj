@@ -262,6 +262,8 @@ class ExperimentsWorkflow:
           random_state=data.hyperparameters.get("random_state", 42),
           ngram_range=data.hyperparameters.get("ngram_range", (1, 3)),
           max_iter=data.hyperparameters.get("max_iter", 1000),
+          class_weight_0=data.hyperparameters.get("class_weight_0", 1),
+          class_weight_1=data.hyperparameters.get("class_weight_1", 1),
         ),
         experiment_config=data.experiment_config,
       ),

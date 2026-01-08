@@ -15,7 +15,7 @@ async def merge_processed_files_activity(data: MergeProcessedDataIn) -> int:
   for file_name in data.all_processed_files:
     df = pd.read_csv(file_name)
     all_data.extend(df.to_dict(orient='records'))
-    os.remove(file_name)
+    # os.remove(file_name)
 
   df_final = pd.DataFrame(all_data)
   

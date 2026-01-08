@@ -18,11 +18,6 @@ from src.activities.tokenizer_activity import (
   TokenizerIn,
   TokenizerOut,
 )
-from src.activities.split_data_activity import (
-  split_data_activity,
-  SplitDataIn,
-  SplitDataOut,
-)
 from src.activities.run_experiment_bi_lstm_with_glove_and_attention_activity import (
   run_experiment_bi_lstm_with_glove_and_attention_activity,
   RunExperimentBiLSTMWithGloveAndAttentionIn,
@@ -110,29 +105,11 @@ class ExperimentBiLSTMWithGloveAndAttentionWorkflow:
       task_queue=WorflowTaskQueue.ML_TASK_QUEUE.value,
     )
 
-    split_data_result: SplitDataOut = await workflow.execute_activity(
-      split_data_activity,
-      arg=SplitDataIn(
-        x_seq_path=tokenizer_result.x_seq_path,
-        y_path=tokenizer_result.y_path,
-        x_train_path=data.experiment_config.x_train_path,
-        x_val_path=data.experiment_config.x_val_path,
-        x_test_path=data.experiment_config.x_test_path,
-        y_train_path=data.experiment_config.y_train_path,
-        y_val_path=data.experiment_config.y_val_path,
-        y_test_path=data.experiment_config.y_test_path,
-        random_state=data.hyperparameters["random_state"],
-      ),
-      start_to_close_timeout=timedelta(minutes=5),
-      task_queue=WorflowTaskQueue.ML_TASK_QUEUE.value,
-    )
-
     experiment_result: RunExperimentBiLSTMWithGloveAndAttentionOut = await workflow.execute_activity(
       run_experiment_bi_lstm_with_glove_and_attention_activity,
       arg=RunExperimentBiLSTMWithGloveAndAttentionIn(
-        input_data_path=data.input_data_path,
-        x_train_path=split_data_result.x_train_path,
-        y_train_path=split_data_result.y_train_path,
+        x_seq_path=tokenizer_result.x_seq_path,
+        y_path=tokenizer_result.y_path,
         embedding_matrix_path=data.experiment_config.glove_embeddings_path,
         max_len=data.hyperparameters["max_len"],
         num_words=embedding_matrix_result.num_words,

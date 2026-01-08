@@ -51,6 +51,7 @@ async def process_files_activity(params: ProcessFileIn) -> ProcessFileOut | None
     return None
   
   df = df.dropna(subset = ["title", "abstract", "label_included"])
+  # df = df.dropna(subset = ["abstract", "label_included"])
 
   db_source = (
     file_name
